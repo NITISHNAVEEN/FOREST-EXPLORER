@@ -66,15 +66,15 @@ export default function PredictPage() {
             <div
               className="absolute bg-primary/50"
               style={{
-                width: '180px',
-                height: '2px',
-                top: '65%',
-                left: '50%',
-                transform: 'rotate(10deg) translateX(-15%)',
-                transformOrigin: 'left center',
+                width: '2px',
+                height: '140px',
+                top: '20%',
+                left: 'calc(50% + 220px)',
+                transform: 'rotate(45deg)',
+                transformOrigin: 'top left',
               }}
             ></div>
-            <div className="absolute top-[45%] left-[calc(50%+250px)]">
+            <div className="absolute top-0 right-0 mt-4 mr-4">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
