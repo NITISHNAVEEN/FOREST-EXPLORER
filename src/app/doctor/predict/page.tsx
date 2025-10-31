@@ -17,14 +17,17 @@ import { ArrowLeft } from 'lucide-react';
 import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function PredictPage() {
-  const [bloodPressure, setBloodPressure] = useState('120/80');
+  const [bloodPressure, setBloodPressure] = useState('');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    // Initialize state on the client to avoid hydration mismatch
+    setBloodPressure('120/80');
   }, []);
 
   if (!isMounted) {
+    // Render nothing on the server to avoid hydration mismatch
     return null;
   }
 
@@ -52,7 +55,7 @@ export default function PredictPage() {
           </div>
           <div className="relative flex justify-center items-center">
             <Image
-              src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg"
+              src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg?output-quality=75"
               alt="Human Body"
               width={600}
               height={450}
