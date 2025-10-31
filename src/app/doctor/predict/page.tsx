@@ -41,7 +41,7 @@ export default function PredictPage() {
         </h1>
       </header>
       <main className="flex-1 p-4 md:p-10">
-        <div className="relative max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold tracking-tight text-foreground">
               Patient Vitals Input
@@ -50,7 +50,7 @@ export default function PredictPage() {
               Enter the patient's vitals to predict the risk of a heart attack.
             </p>
           </div>
-          <div className="relative flex justify-center">
+          <div className="relative flex justify-center items-center">
             <Image
               src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg"
               alt="Human Body"
@@ -59,7 +59,19 @@ export default function PredictPage() {
               data-ai-hint="circulatory system"
               className="object-contain"
             />
-            <div className="absolute top-[25%] left-[calc(50%-380px)] transform -translate-x-1/2">
+            {/* Connecting line */}
+            <div
+              className="absolute bg-primary/50"
+              style={{
+                width: '180px',
+                height: '2px',
+                top: '65%',
+                left: '50%',
+                transform: 'rotate(10deg) translateX(-15%)',
+                transformOrigin: 'left center',
+              }}
+            ></div>
+            <div className="absolute top-[45%] left-[calc(50%+250px)]">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
