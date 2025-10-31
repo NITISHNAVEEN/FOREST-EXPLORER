@@ -52,7 +52,7 @@ export default function PredictPage() {
         </h1>
       </header>
       <main className="flex-1 p-4 md:p-10">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold tracking-tight text-foreground">
               Patient Vitals Input
@@ -61,32 +61,29 @@ export default function PredictPage() {
               Enter the patient's vitals to predict the risk of a heart attack.
             </p>
           </div>
-          <div className="relative flex justify-center items-center" style={{minHeight: '600px'}}>
+          <div className="relative flex justify-center items-center" style={{minHeight: '300px'}}>
             <Image
               src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg?output-quality=75"
               alt="Human Body"
-              width={601}
-              height={450}
+              width={300}
+              height={225}
               data-ai-hint="circulatory system"
               className="object-contain"
             />
             <div className="absolute top-0 right-0">
-              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                <CardHeader>
-                  <CardTitle>Blood Pressure</CardTitle>
-                  <CardDescription>
-                    Enter systolic/diastolic value.
-                  </CardDescription>
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className='p-3'>
+                  <CardTitle className='text-base'>Blood Pressure</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="bp">Blood Pressure (mmHg)</Label>
+                <CardContent className='p-3'>
+                  <div className="grid w-full items-center gap-2">
+                    <div className="flex flex-col space-y-1">
                       <Input
                         id="bp"
                         value={bloodPressure}
                         onChange={(e) => setBloodPressure(e.target.value)}
                         placeholder="e.g. 120/80"
+                        className="text-xs h-8"
                       />
                     </div>
                   </div>
@@ -94,22 +91,19 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute top-0 left-0">
-              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                <CardHeader>
-                  <CardTitle>Cholesterol</CardTitle>
-                  <CardDescription>
-                    Enter total cholesterol level.
-                  </CardDescription>
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className='p-3'>
+                  <CardTitle className='text-base'>Cholesterol</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="chol">Cholesterol (mg/dL)</Label>
-                      <Input
+                <CardContent className='p-3'>
+                  <div className="grid w-full items-center gap-2">
+                    <div className="flex flex-col space-y-1">
+                       <Input
                         id="chol"
                         value={cholesterol}
                         onChange={(e) => setCholesterol(e.target.value)}
                         placeholder="e.g. 200"
+                        className="text-xs h-8"
                       />
                     </div>
                   </div>
@@ -117,22 +111,19 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute bottom-0 left-0">
-              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                <CardHeader>
-                  <CardTitle>Heart Rate</CardTitle>
-                  <CardDescription>
-                    Enter resting heart rate.
-                  </CardDescription>
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className='p-3'>
+                  <CardTitle className='text-base'>Heart Rate</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="hr">Heart Rate (bpm)</Label>
+                <CardContent className='p-3'>
+                  <div className="grid w-full items-center gap-2">
+                    <div className="flex flex-col space-y-1">
                       <Input
                         id="hr"
                         value={heartRate}
                         onChange={(e) => setHeartRate(e.target.value)}
                         placeholder="e.g. 75"
+                        className="text-xs h-8"
                       />
                     </div>
                   </div>
@@ -140,22 +131,19 @@ export default function PredictPage() {
               </Card>
             </div>
              <div className="absolute bottom-0 right-0">
-              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                <CardHeader>
-                  <CardTitle>Blood Sugar</CardTitle>
-                  <CardDescription>
-                    Enter fasting blood sugar level.
-                  </CardDescription>
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className='p-3'>
+                  <CardTitle className='text-base'>Blood Sugar</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="bs">Blood Sugar (mg/dL)</Label>
+                <CardContent className='p-3'>
+                  <div className="grid w-full items-center gap-2">
+                    <div className="flex flex-col space-y-1">
                       <Input
                         id="bs"
                         value={bloodSugar}
                         onChange={(e) => setBloodSugar(e.target.value)}
                         placeholder="e.g. 99"
+                        className="text-xs h-8"
                       />
                     </div>
                   </div>
