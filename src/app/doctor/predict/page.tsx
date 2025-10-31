@@ -67,7 +67,7 @@ export default function PredictPage() {
               data-ai-hint="circulatory system"
               className="object-contain"
             />
-            <div className="absolute top-0 right-0 -mr-16">
+            <div className="absolute top-0 right-0">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle>Blood Pressure</CardTitle>
@@ -90,7 +90,7 @@ export default function PredictPage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="absolute top-0 left-0 -ml-16">
+            <div className="absolute top-0 left-0">
               <Card className="w-72 shadow-lg">
                 <CardHeader>
                   <CardTitle>Cholesterol</CardTitle>
@@ -113,7 +113,7 @@ export default function PredictPage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="absolute bottom-0 left-0 -ml-16">
+            <div className="absolute bottom-0 left-0">
               <Card className="w-72 shadow-lg">
                 <CardHeader>
                   <CardTitle>Heart Rate</CardTitle>
@@ -136,7 +136,7 @@ export default function PredictPage() {
                 </CardContent>
               </Card>
             </div>
-             <div className="absolute bottom-0 right-0 -mr-16">
+             <div className="absolute bottom-0 right-0">
               <Card className="w-72 shadow-lg">
                 <CardHeader>
                   <CardTitle>Blood Sugar</CardTitle>
