@@ -1,0 +1,45 @@
+
+[
+  {
+    "bloodPressure": "150/95",
+    "cholesterol": 250,
+    "heartRate": 90,
+    "bloodSugar": 130,
+    "target": "risky"
+  },
+  {
+    "bloodPressure": "118/78",
+    "cholesterol": 190,
+    "heartRate": 72,
+    "bloodSugar": 95,
+    "target": "risk less"
+  },
+  {
+    "bloodPressure": "160/100",
+    "cholesterol": 280,
+    "heartRate": 95,
+    "bloodSugar": 150,
+    "target": "risky"
+  },
+  {
+    "bloodPressure": "125/82",
+    "cholesterol": 210,
+    "heartRate": 78,
+    "bloodSugar": 105,
+    "target": "risk less"
+  },
+  {
+    "bloodPressure": "135/88",
+    "cholesterol": 225,
+    "heartRate": 82,
+    "bloodSugar": 115,
+    "target": "risky"
+  },
+  {
+    "bloodPressure": "115/75",
+    "cholesterol": 185,
+    "heartRate": 68,
+    "bloodSugar": 92,
+    "target": "risk less"
+  }
+]
