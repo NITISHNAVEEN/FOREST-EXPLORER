@@ -108,7 +108,9 @@ const pruneTree = (node: TreeNode, maxDepth: number, currentDepth: number = 1): 
     delete newNode.children;
     newNode.type = 'leaf';
     // Simplified logic to make a prediction for a pruned node
-    newNode.prediction = (Math.random() > 0.5) ? 'Positive' : 'Negative'; 
+    // Use a deterministic method based on node ID to avoid hydration errors
+    const lastChar = newNode.id.charCodeAt(newNode.id.length - 1);
+    newNode.prediction = (lastChar % 2 === 0) ? 'Positive' : 'Negative';
     newNode.decision = `Pruned at depth ${currentDepth}.`;
     return newNode;
   }

@@ -22,13 +22,25 @@ export function ForestNodeDisplay({ node, role, highlightedPath }: ForestNodeDis
     isHighlighted ? 'animate-path-highlight border-primary' : 'border-dashed'
   );
 
+  const getPredictionIcon = (prediction?: string) => {
+    if (!prediction) return null;
+    const lowerCasePrediction = prediction.toLowerCase();
+    if (['high risk', 'fail', 'deny', 'negative'].includes(lowerCasePrediction)) {
+      return <XCircle className="text-destructive"/>;
+    }
+    if (['low risk', 'pass', 'approve', 'positive'].includes(lowerCasePrediction)) {
+      return <CheckCircle className="text-green-500" />;
+    }
+    return null;
+  }
+
   const NodeContent = () => (
     <>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center justify-center gap-2 text-base font-semibold">
           {node.type === 'leaf' ? (
             <>
-              {node.prediction === 'High Risk' || node.prediction === 'Fail' || node.prediction === 'Deny' ? <XCircle className="text-destructive"/> : <CheckCircle className="text-green-500" />}
+              {getPredictionIcon(node.prediction)}
               Prediction: {node.prediction}
             </>
           ) : (
