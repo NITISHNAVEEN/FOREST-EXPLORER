@@ -62,8 +62,8 @@ export default function PredictPage() {
             <Image
               src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg?output-quality=75"
               alt="Human Body"
-              width={267}
-              height={200}
+              width={401}
+              height={300}
               data-ai-hint="circulatory system"
               className="object-contain"
             />
