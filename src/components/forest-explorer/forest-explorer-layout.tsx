@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   SidebarProvider,
   Sidebar,
@@ -29,15 +30,20 @@ import {
 } from "@/components/ui/dialog";
 
 export default function ForestExplorerLayout() {
-  const [role, setRole] = useState<Role>(ROLES[0]);
-  const [dataset, setDataset] = useState<DataSet>(
-    DATASETS.find((d) => d.roleId === ROLES[0].id)!
-  );
+  const [role, setRole] = useState<Role | null>(null);
+  const [dataset, setDataset] = useState<DataSet | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
   const { toast } = useToast();
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [numTrees, setNumTrees] = useState(3);
   const [maxDepth, setMaxDepth] = useState(3);
+
+  useEffect(() => {
+    // Initialize state on the client to avoid hydration errors
+    const initialRole = ROLES[0];
+    setRole(initialRole);
+    setDataset(DATASETS.find((d) => d.roleId === initialRole.id)!);
+  }, []);
 
   const handleRoleChange = (roleId: string) => {
     const newRole = ROLES.find((r) => r.id === roleId)!;
@@ -56,6 +62,11 @@ export default function ForestExplorerLayout() {
   const handleUploadClick = () => {
     setIsUploadDialogOpen(true);
   };
+
+  if (!role || !dataset) {
+    // Render a loading state or null until the state is initialized
+    return null;
+  }
 
   return (
     <SidebarProvider>
