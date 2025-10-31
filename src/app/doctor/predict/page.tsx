@@ -314,7 +314,7 @@ export default function PredictPage() {
   });
   const [isMounted, setIsMounted] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
-  const [showResult, setShowResult] = useState(false);
+  const [showResultDialog, setShowResultDialog] = useState(false);
   const [prediction, setPrediction] = useState<'Risky' | 'Not Risky' | null>(
     null
   );
@@ -354,16 +354,16 @@ export default function PredictPage() {
 
     const riskyCount = results.filter((r) => r === 'Risky').length;
     const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
-    setPrediction(finalPrediction);
-
+    
     setTimeout(() => {
-      setShowResult(true);
+      setPrediction(finalPrediction);
+      setShowResultDialog(true);
     }, 4000); // Wait for animations to play
   };
 
   const reset = () => {
     setIsPredicting(false);
-    setShowResult(false);
+    setShowResultDialog(false);
     setPrediction(null);
   };
 
@@ -421,7 +421,7 @@ export default function PredictPage() {
         </h1>
       </header>
       <main className="flex-1 p-4 md:p-6 flex flex-col items-center">
-        {!isPredicting ? (
+        {!isPredicting && !prediction ? (
           <div className="w-full max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold tracking-tight text-foreground">
@@ -530,8 +530,40 @@ export default function PredictPage() {
         ) : (
           <div className="flex flex-col items-center w-full mt-8">
             <h2 className="text-2xl font-bold mb-4">
-              Analyzing Patient Data...
+              {prediction ? 'Prediction Result' : 'Analyzing Patient Data...'}
             </h2>
+
+            {prediction && (
+              <Card className="mb-8 w-full max-w-md shadow-lg">
+                <CardContent className="p-6 flex flex-col items-center justify-center">
+                  {prediction === 'Risky' ? (
+                    <>
+                      <HeartCrack className="w-16 h-16 text-destructive animate-pulse" />
+                      <p className="mt-4 text-3xl font-bold text-destructive">
+                        RISKY
+                      </p>
+                      <p className="text-muted-foreground mt-2">
+                        Based on the Random Forest model, the patient is at high risk.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <HeartPulse className="w-16 h-16 text-green-500" />
+                      <p className="mt-4 text-3xl font-bold text-green-500">
+                        NOT RISKY
+                      </p>
+                      <p className="text-muted-foreground mt-2">
+                        Based on the Random Forest model, the patient is at low risk.
+                      </p>
+                    </>
+                  )}
+                   <Button onClick={reset} className="mt-6">
+                      Run New Prediction
+                    </Button>
+                </CardContent>
+              </Card>
+            )}
+
             <div
               className={cn(
                 'flex flex-col md:flex-row justify-around w-full gap-8 transition-opacity duration-1000',
@@ -554,7 +586,7 @@ export default function PredictPage() {
           </div>
         )}
 
-        <AlertDialog open={showResult} onOpenChange={setShowResult}>
+        <AlertDialog open={showResultDialog} onOpenChange={setShowResultDialog}>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle className="text-2xl text-center">
@@ -582,8 +614,8 @@ export default function PredictPage() {
               )}
             </div>
             <AlertDialogFooter>
-              <AlertDialogAction onClick={reset}>
-                Run New Prediction
+              <AlertDialogAction onClick={() => setShowResultDialog(false)}>
+                View Details
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
