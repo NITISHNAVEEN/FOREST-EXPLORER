@@ -70,10 +70,12 @@ export default function DoctorPage() {
                   gives you the best result.
                 </CardDescription>
                 <div className="flex justify-end mt-6">
-                  <Button>
-                    <HeartPulse className="w-4 h-4 mr-2" />
-                    Predict Now
-                  </Button>
+                  <Link href="/doctor/predict">
+                    <Button>
+                      <HeartPulse className="w-4 h-4 mr-2" />
+                      Predict Now
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>

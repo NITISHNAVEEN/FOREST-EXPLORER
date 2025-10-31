@@ -16,5 +16,17 @@
     "width": 600,
     "height": 400,
     "data-ai-hint": "fresh vegetables"
+  },
+  "human_body": {
+    "src": "https://picsum.photos/seed/human-body/600/900",
+    "width": 600,
+    "height": 900,
+    "data-ai-hint": "human anatomy scan"
+  },
+  "bp_monitor": {
+    "src": "https://picsum.photos/seed/bp-monitor/128/128",
+    "width": 128,
+    "height": 128,
+    "data-ai-hint": "blood pressure monitor"
   }
 }

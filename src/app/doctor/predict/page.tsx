@@ -1,0 +1,93 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ArrowLeft } from 'lucide-react';
+import placeholderImages from '@/lib/placeholder-images.json';
+
+export default function PredictPage() {
+  const [bloodPressure, setBloodPressure] = useState('120/80');
+
+  return (
+    <div className="flex flex-col min-h-screen bg-background">
+      <header className="sticky top-0 z-30 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm">
+        <Link href="/doctor">
+          <Button variant="ghost" size="icon">
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+        </Link>
+        <h1 className="ml-4 text-xl font-semibold">
+          Heart Attack Prediction
+        </h1>
+      </header>
+      <main className="flex-1 p-4 md:p-10">
+        <div className="relative max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">
+              Patient Vitals Input
+            </h2>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Enter the patient's vitals to predict the risk of a heart attack.
+            </p>
+          </div>
+          <div className="relative flex justify-center">
+            <Image
+              src={placeholderImages.human_body.src}
+              alt="Human Body"
+              width={placeholderImages.human_body.width}
+              height={placeholderImages.human_body.height}
+              data-ai-hint={placeholderImages.human_body['data-ai-hint']}
+              className="object-contain"
+            />
+            <div className="absolute top-[25%] left-[calc(50%-280px)] transform -translate-x-1/2">
+              <Card className="w-72 shadow-lg animate-path-highlight">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Image
+                      src={placeholderImages.bp_monitor.src}
+                      alt="BP Monitor"
+                      width={placeholderImages.bp_monitor.width}
+                      height={placeholderImages.bp_monitor.height}
+                      data-ai-hint={
+                        placeholderImages.bp_monitor['data-ai-hint']
+                      }
+                      className="w-8 h-8"
+                    />
+                    Blood Pressure
+                  </CardTitle>
+                  <CardDescription>
+                    Enter systolic/diastolic value.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="bp">Blood Pressure (mmHg)</Label>
+                      <Input
+                        id="bp"
+                        value={bloodPressure}
+                        onChange={(e) => setBloodPressure(e.target.value)}
+                        placeholder="e.g. 120/80"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
