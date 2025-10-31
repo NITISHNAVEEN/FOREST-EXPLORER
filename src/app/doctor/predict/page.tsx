@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 
 export default function PredictPage() {
   const [bloodPressure, setBloodPressure] = useState('');
@@ -30,6 +30,9 @@ export default function PredictPage() {
     setHeartRate('75');
     setBloodSugar('99');
   }, []);
+
+  const allFieldsFilled =
+    bloodPressure && cholesterol && heartRate && bloodSugar;
 
   if (!isMounted) {
     // Render nothing on the server to avoid hydration mismatch
@@ -62,13 +65,13 @@ export default function PredictPage() {
             <Image
               src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg?output-quality=75"
               alt="Human Body"
-              width={401}
-              height={300}
+              width={601}
+              height={450}
               data-ai-hint="circulatory system"
               className="object-contain"
             />
             <div className="absolute top-0 right-0">
-              <Card className="w-72 shadow-lg animate-path-highlight">
+              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                 <CardHeader>
                   <CardTitle>Blood Pressure</CardTitle>
                   <CardDescription>
@@ -91,7 +94,7 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute top-0 left-0">
-              <Card className="w-72 shadow-lg animate-path-highlight">
+              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                 <CardHeader>
                   <CardTitle>Cholesterol</CardTitle>
                   <CardDescription>
@@ -114,7 +117,7 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute bottom-0 left-0">
-              <Card className="w-72 shadow-lg animate-path-highlight">
+              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                 <CardHeader>
                   <CardTitle>Heart Rate</CardTitle>
                   <CardDescription>
@@ -137,7 +140,7 @@ export default function PredictPage() {
               </Card>
             </div>
              <div className="absolute bottom-0 right-0">
-              <Card className="w-72 shadow-lg animate-path-highlight">
+              <Card className="w-72 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                 <CardHeader>
                   <CardTitle>Blood Sugar</CardTitle>
                   <CardDescription>
@@ -160,6 +163,14 @@ export default function PredictPage() {
               </Card>
             </div>
           </div>
+          {allFieldsFilled && (
+            <div className="flex justify-center mt-8">
+              <Button size="lg">
+                <Sparkles className="w-5 h-5 mr-2" />
+                Predict
+              </Button>
+            </div>
+          )}
         </div>
       </main>
     </div>

@@ -86,17 +86,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-@layer utilities {
-  @keyframes path-highlight {
-    0%, 100% {
-      @apply bg-primary/10 shadow-none;
-    }
-    50% {
-      @apply bg-primary/20 shadow-lg shadow-primary/30;
-    }
-  }
-  .animate-path-highlight {
-    animation: path-highlight 2.5s ease-in-out infinite;
-  }
-}
