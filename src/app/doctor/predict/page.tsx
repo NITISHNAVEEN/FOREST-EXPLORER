@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -18,6 +18,15 @@ import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function PredictPage() {
   const [bloodPressure, setBloodPressure] = useState('120/80');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -43,14 +52,14 @@ export default function PredictPage() {
           </div>
           <div className="relative flex justify-center">
             <Image
-              src={placeholderImages.human_body.src}
+              src="https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg"
               alt="Human Body"
-              width={placeholderImages.human_body.width}
-              height={placeholderImages.human_body.height}
-              data-ai-hint={placeholderImages.human_body['data-ai-hint']}
+              width={600}
+              height={450}
+              data-ai-hint="circulatory system"
               className="object-contain"
             />
-            <div className="absolute top-[25%] left-[calc(50%-280px)] transform -translate-x-1/2">
+            <div className="absolute top-[25%] left-[calc(50%-380px)] transform -translate-x-1/2">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
