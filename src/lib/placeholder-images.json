@@ -23,6 +23,12 @@
     "height": 900,
     "data-ai-hint": "human anatomy scan"
   },
+  "human_body_scan": {
+    "src": "https://picsum.photos/seed/human-scan/200/300",
+    "width": 200,
+    "height": 300,
+    "data-ai-hint": "medical body scan"
+  },
   "bp_monitor": {
     "src": "https://picsum.photos/seed/bp-monitor/128/128",
     "width": 128,
