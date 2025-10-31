@@ -91,7 +91,7 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute top-0 left-0">
-              <Card className="w-72 shadow-lg">
+              <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle>Cholesterol</CardTitle>
                   <CardDescription>
@@ -114,7 +114,7 @@ export default function PredictPage() {
               </Card>
             </div>
             <div className="absolute bottom-0 left-0">
-              <Card className="w-72 shadow-lg">
+              <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle>Heart Rate</CardTitle>
                   <CardDescription>
@@ -137,7 +137,7 @@ export default function PredictPage() {
               </Card>
             </div>
              <div className="absolute bottom-0 right-0">
-              <Card className="w-72 shadow-lg">
+              <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
                   <CardTitle>Blood Sugar</CardTitle>
                   <CardDescription>
