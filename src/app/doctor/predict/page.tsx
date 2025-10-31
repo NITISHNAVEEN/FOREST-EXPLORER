@@ -409,7 +409,7 @@ export default function PredictPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-30 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm">
         <Link href="/doctor">
           <Button variant="ghost" size="icon">
