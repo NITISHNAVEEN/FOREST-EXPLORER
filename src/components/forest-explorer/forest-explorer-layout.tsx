@@ -36,6 +36,8 @@ export default function ForestExplorerLayout() {
   const [isSimulating, setIsSimulating] = useState(false);
   const { toast } = useToast();
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
+  const [numTrees, setNumTrees] = useState(3);
+  const [maxDepth, setMaxDepth] = useState(3);
 
   const handleRoleChange = (roleId: string) => {
     const newRole = ROLES.find((r) => r.id === roleId)!;
@@ -87,6 +89,10 @@ export default function ForestExplorerLayout() {
             dataset={dataset}
             onRoleChange={handleRoleChange}
             onDatasetChange={handleDatasetChange}
+            numTrees={numTrees}
+            onNumTreesChange={setNumTrees}
+            maxDepth={maxDepth}
+            onMaxDepthChange={setMaxDepth}
           />
         </SidebarContent>
         <SidebarFooter>
@@ -118,6 +124,8 @@ export default function ForestExplorerLayout() {
             role={role}
             dataset={dataset}
             isSimulating={isSimulating}
+            numTrees={numTrees}
+            maxDepth={maxDepth}
           />
           <Separator className="my-8" />
           <ExplanationSection

@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { getForestForRole, getHighlightedPath, placeholderImages } from "@/lib/data";
+import { getForestForRole, getHighlightedPath } from "@/lib/data";
 import type { Role, DataSet, RandomForest } from "@/lib/types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ForestNodeDisplay } from "./forest-node";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -14,10 +13,13 @@ interface VisualizationProps {
   role: Role;
   dataset: DataSet;
   isSimulating: boolean;
+  numTrees: number;
+  maxDepth: number;
 }
 
-export function Visualization({ role, dataset, isSimulating }: VisualizationProps) {
-  const forest: RandomForest = getForestForRole(role.id);
+export function Visualization({ role, dataset, isSimulating, numTrees, maxDepth }: VisualizationProps) {
+  const fullForest: RandomForest = getForestForRole(role.id, maxDepth);
+  const forest = fullForest.slice(0, numTrees);
   const highlightedPath = isSimulating ? getHighlightedPath(role.id) : [];
 
   const DataPoint = () => (

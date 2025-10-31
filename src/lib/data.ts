@@ -101,24 +101,44 @@ const bankTree: TreeNode = {
     ]
 };
 
+// Function to clone and prune a tree to a max depth
+const pruneTree = (node: TreeNode, maxDepth: number, currentDepth: number = 1): TreeNode => {
+  const newNode = { ...node };
+  if (currentDepth >= maxDepth || !newNode.children || newNode.children.length === 0) {
+    delete newNode.children;
+    newNode.type = 'leaf';
+    // Simplified logic to make a prediction for a pruned node
+    newNode.prediction = (Math.random() > 0.5) ? 'Positive' : 'Negative'; 
+    newNode.decision = `Pruned at depth ${currentDepth}.`;
+    return newNode;
+  }
 
-const simplifiedForests: Record<RoleId, RandomForest> = {
-    doctor: [
-        { id: 'tree1', root: doctorTree },
-        { id: 'tree2', root: { ...doctorTree, id: 'd-root-2', children: doctorTree.children?.slice().reverse() } },
-    ],
-    fssai_manager: [
-        { id: 'tree1', root: fssaiTree },
-        { id: 'tree2', root: { ...fssaiTree, id: 'f-root-2', children: fssaiTree.children?.slice().reverse() } },
-        { id: 'tree3', root: { ...fssaiTree, id: 'f-root-3' } },
-    ],
-    bank_manager: [
-        { id: 'tree1', root: bankTree },
-    ],
+  newNode.children = newNode.children.map(child => pruneTree(child, maxDepth, currentDepth + 1));
+  return newNode;
 };
 
-export const getForestForRole = (roleId: RoleId): RandomForest => {
-    return simplifiedForests[roleId];
+
+const simplifiedForests: Record<RoleId, RandomForest> = {
+    doctor: Array.from({ length: 10 }, (_, i) => ({
+      id: `tree${i + 1}`,
+      root: { ...doctorTree, id: `d-root-${i + 1}`, children: i % 2 === 0 ? doctorTree.children : doctorTree.children?.slice().reverse() }
+    })),
+    fssai_manager: Array.from({ length: 10 }, (_, i) => ({
+      id: `tree${i + 1}`,
+      root: { ...fssaiTree, id: `f-root-${i + 1}`, children: i % 2 === 0 ? fssaiTree.children : fssaiTree.children?.slice().reverse() }
+    })),
+    bank_manager: Array.from({ length: 10 }, (_, i) => ({
+      id: `tree${i + 1}`,
+      root: { ...bankTree, id: `b-root-${i + 1}`, children: i % 2 === 0 ? bankTree.children : bankTree.children?.slice().reverse() }
+    })),
+};
+
+export const getForestForRole = (roleId: RoleId, maxDepth: number = 3): RandomForest => {
+    const forest = simplifiedForests[roleId];
+    return forest.map(tree => ({
+        ...tree,
+        root: pruneTree(tree.root, maxDepth),
+    }));
 };
 
 // A simplified path based on sample data
