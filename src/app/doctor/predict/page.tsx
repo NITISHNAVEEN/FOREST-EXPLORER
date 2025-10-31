@@ -62,18 +62,6 @@ export default function PredictPage() {
               data-ai-hint="circulatory system"
               className="object-contain"
             />
-            {/* Connecting line */}
-            <div
-              className="absolute bg-primary/50"
-              style={{
-                width: '2px',
-                height: '140px',
-                top: '20%',
-                left: 'calc(50% + 150px)',
-                transform: 'rotate(45deg)',
-                transformOrigin: 'top left',
-              }}
-            ></div>
             <div className="absolute top-0 right-0 mt-4 mr-4">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
