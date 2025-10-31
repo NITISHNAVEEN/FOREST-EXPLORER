@@ -65,19 +65,7 @@ export default function PredictPage() {
             <div className="absolute top-0 right-0 mt-4 mr-4">
               <Card className="w-72 shadow-lg animate-path-highlight">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Image
-                      src={placeholderImages.bp_monitor.src}
-                      alt="BP Monitor"
-                      width={placeholderImages.bp_monitor.width}
-                      height={placeholderImages.bp_monitor.height}
-                      data-ai-hint={
-                        placeholderImages.bp_monitor['data-ai-hint']
-                      }
-                      className="w-8 h-8"
-                    />
-                    Blood Pressure
-                  </CardTitle>
+                  <CardTitle>Blood Pressure</CardTitle>
                   <CardDescription>
                     Enter systolic/diastolic value.
                   </CardDescription>
