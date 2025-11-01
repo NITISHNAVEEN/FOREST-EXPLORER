@@ -632,6 +632,14 @@ export default function PredictPage() {
                         <span className="text-sm font-medium text-muted-foreground">
                           Tree {index + 1}
                         </span>
+                         <span
+                          className={cn('font-bold ml-1 text-sm', {
+                            'text-destructive': result === 'Risky',
+                            'text-green-500': result === 'Not Risky',
+                          })}
+                        >
+                          {result}
+                        </span>
                       </div>
                     ))}
                   </div>
