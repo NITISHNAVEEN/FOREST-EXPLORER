@@ -27,6 +27,8 @@ import {
   HeartCrack,
   HeartPulse,
   Info,
+  ArrowRight,
+  Vote,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/lib/placeholder-images.json';
@@ -614,34 +616,67 @@ export default function PredictPage() {
               <Card className="mt-8 w-full max-w-3xl">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Info className="w-6 h-6" />
+                    <Vote className="w-6 h-6" />
                     How the Final Prediction is Made
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-muted-foreground">
-                  <p>
-                    The Random Forest algorithm uses multiple decision trees to
-                    make a final prediction. Each tree independently analyzes
-                    the patient's data and makes its own decision.
-                  </p>
-                  <p className="mt-2">
-                    The final result is determined by a majority vote. In this
-                    case,{' '}
-                    <b>
-                      {treeResults.filter((r) => r === prediction).length} out of
-                      3
-                    </b>{' '}
-                    trees predicted the patient is{' '}
-                    <span
-                      className={cn('font-bold', {
-                        'text-destructive': prediction === 'Risky',
-                        'text-green-500': prediction === 'Not Risky',
-                      })}
+                <CardContent className="flex flex-col items-center justify-center p-6 space-y-6">
+                  <div className="flex items-center space-x-8">
+                    {treeResults.map((result, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center space-y-2"
+                      >
+                        <div
+                          className={cn(
+                            'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg',
+                            result === 'Risky'
+                              ? 'bg-destructive'
+                              : 'bg-green-500'
+                          )}
+                        >
+                          {result === 'Risky' ? (
+                            <HeartCrack className="w-8 h-8" />
+                          ) : (
+                            <HeartPulse className="w-8 h-8" />
+                          )}
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground">
+                          Tree {index + 1}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90 sm:rotate-0" />
+
+                  <div className="flex flex-col items-center space-y-2">
+                    <div
+                      className={cn(
+                        'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
+                        prediction === 'Risky'
+                          ? 'bg-destructive'
+                          : 'bg-green-500'
+                      )}
                     >
-                      {prediction}
+                      {prediction === 'Risky' ? (
+                        <HeartCrack className="w-12 h-12" />
+                      ) : (
+                        <HeartPulse className="w-12 h-12" />
+                      )}
+                    </div>
+                    <span className="text-lg font-semibold">
+                      Final Result:{' '}
+                      <span
+                        className={cn({
+                          'text-destructive': prediction === 'Risky',
+                          'text-green-500': prediction === 'Not Risky',
+                        })}
+                      >
+                        {prediction}
+                      </span>
                     </span>
-                    , making it the final outcome.
-                  </p>
+                  </div>
                 </CardContent>
               </Card>
             )}
@@ -686,5 +721,3 @@ export default function PredictPage() {
     </div>
   );
 }
-
-    
