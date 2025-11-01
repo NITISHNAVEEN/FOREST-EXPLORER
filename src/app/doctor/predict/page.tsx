@@ -58,8 +58,8 @@ const TreeNode = ({
         }
       )}
     >
-      <p className="font-semibold">{condition}</p>
-      {result && <p className="font-bold mt-1">{result}</p>}
+      <p className="font-semibold">{isLeaf ? result : condition}</p>
+      {isLeaf && result && <p className="font-bold mt-1">{null}</p>}
     </div>
     {children && (
       <div className="flex justify-center mt-2 space-x-4">{children}</div>
