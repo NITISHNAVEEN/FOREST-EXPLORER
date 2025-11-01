@@ -10,6 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
@@ -17,9 +18,11 @@ import {
   Sparkles,
   HeartCrack,
   HeartPulse,
-  Info,
   ArrowRight,
   Vote,
+  Users,
+  ShieldCheck,
+  BarChart,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/lib/placeholder-images.json';
@@ -579,80 +582,142 @@ export default function PredictPage() {
             </div>
 
             {prediction && (
-              <Card className="mt-8 w-full max-w-3xl">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Vote className="w-6 h-6" />
-                    How the Final Prediction is Made
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-6">
-                  <div className="flex items-center space-x-8">
-                    {treeResults.map((result, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col items-center space-y-2"
-                      >
+              <>
+                <Card className="mt-8 w-full max-w-3xl">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Vote className="w-6 h-6" />
+                      How the Final Prediction is Made
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex flex-col items-center justify-center p-6 space-y-6">
+                    <div className="flex items-center space-x-8">
+                      {treeResults.map((result, index) => (
                         <div
-                          className={cn(
-                            'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg',
-                            result === 'Risky'
-                              ? 'bg-destructive'
-                              : 'bg-green-500'
-                          )}
+                          key={index}
+                          className="flex flex-col items-center space-y-2"
                         >
-                          {result === 'Risky' ? (
-                            <HeartCrack className="w-8 h-8" />
-                          ) : (
-                            <HeartPulse className="w-8 h-8" />
-                          )}
+                          <div
+                            className={cn(
+                              'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg',
+                              result === 'Risky'
+                                ? 'bg-destructive'
+                                : 'bg-green-500'
+                            )}
+                          >
+                            {result === 'Risky' ? (
+                              <HeartCrack className="w-8 h-8" />
+                            ) : (
+                              <HeartPulse className="w-8 h-8" />
+                            )}
+                          </div>
+                          <span className="text-sm font-medium text-muted-foreground">
+                            Tree {index + 1}
+                          </span>
+                           <span
+                            className={cn('font-bold ml-1 text-sm', {
+                              'text-destructive': result === 'Risky',
+                              'text-green-500': result === 'Not Risky',
+                            })}
+                          >
+                            {result}
+                          </span>
                         </div>
-                        <span className="text-sm font-medium text-muted-foreground">
-                          Tree {index + 1}
-                        </span>
-                         <span
-                          className={cn('font-bold ml-1 text-sm', {
-                            'text-destructive': result === 'Risky',
-                            'text-green-500': result === 'Not Risky',
+                      ))}
+                    </div>
+
+                    <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
+
+                    <div className="flex flex-col items-center space-y-2">
+                      <div
+                        className={cn(
+                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
+                          prediction === 'Risky'
+                            ? 'bg-destructive'
+                            : 'bg-green-500'
+                        )}
+                      >
+                        {prediction === 'Risky' ? (
+                          <HeartCrack className="w-12 h-12" />
+                        ) : (
+                          <HeartPulse className="w-12 h-12" />
+                        )}
+                      </div>
+                      <span className="text-lg font-semibold">
+                        Final Result:{' '}
+                        <span
+                          className={cn({
+                            'text-destructive': prediction === 'Risky',
+                            'text-green-500': prediction === 'Not Risky',
                           })}
                         >
-                          {result}
+                          {prediction}
                         </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
-
-                  <div className="flex flex-col items-center space-y-2">
-                    <div
-                      className={cn(
-                        'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
-                        prediction === 'Risky'
-                          ? 'bg-destructive'
-                          : 'bg-green-500'
-                      )}
-                    >
-                      {prediction === 'Risky' ? (
-                        <HeartCrack className="w-12 h-12" />
-                      ) : (
-                        <HeartPulse className="w-12 h-12" />
-                      )}
+                      </span>
                     </div>
-                    <span className="text-lg font-semibold">
-                      Final Result:{' '}
-                      <span
-                        className={cn({
+                  </CardContent>
+                </Card>
+
+                <Card className="mt-8 w-full max-w-3xl">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Sparkles className="w-6 h-6 text-primary" />
+                      Why Random Forest Works
+                    </CardTitle>
+                    <CardDescription>
+                      The "Random Forest" method provides a more reliable
+                      prediction by combining multiple decision trees.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div className="flex flex-col items-center space-y-2">
+                      <div className="p-3 rounded-full bg-primary/10">
+                        <Users className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="font-semibold">Multiple Perspectives</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Each tree votes, providing a broader analysis than a
+                        single opinion.
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center space-y-2">
+                      <div className="p-3 rounded-full bg-primary/10">
+                        <BarChart className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="font-semibold">Reduces Bias</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Averaging many trees cancels out individual errors and
+                        biases.
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center space-y-2">
+                      <div className="p-3 rounded-full bg-primary/10">
+                        <ShieldCheck className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="font-semibold">Higher Accuracy</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The collective decision is more accurate and robust,
+                        leading to better patient outcomes.
+                      </p>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <p
+                      className={cn(
+                        'w-full text-center font-semibold text-lg',
+                        {
                           'text-destructive': prediction === 'Risky',
                           'text-green-500': prediction === 'Not Risky',
-                        })}
-                      >
-                        {prediction}
-                      </span>
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+                        }
+                      )}
+                    >
+                      {prediction === 'Risky'
+                        ? 'This collective approach gives higher confidence in the "Risky" prediction.'
+                        : 'This collective approach confirms the patient is likely not at immediate risk.'}
+                    </p>
+                  </CardFooter>
+                </Card>
+              </>
             )}
           </div>
         )}
