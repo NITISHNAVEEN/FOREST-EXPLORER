@@ -155,7 +155,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
-                condition="Risky"
                 isLeaf
                 result="Risky"
                 isPath={isPath('bp>140_chol>240')}
@@ -164,7 +163,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">No</span>
               <TreeNode
-                condition="Risky"
                 isLeaf
                 result="Risky"
                 isPath={isPath('bp>140_chol<=240')}
@@ -178,7 +176,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
-                condition="Risky"
                 isLeaf
                 result="Risky"
                 isPath={isPath('bp<=140_hr>90')}
@@ -187,7 +184,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">No</span>
               <TreeNode
-                condition="Not Risky"
                 isLeaf
                 result="Not Risky"
                 isPath={isPath('bp<=140_hr<=90')}
@@ -208,7 +204,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
-                condition="Risky"
                 isLeaf
                 result="Risky"
                 isPath={isPath('chol>220_bs>125')}
@@ -217,7 +212,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">No</span>
               <TreeNode
-                condition="Not Risky"
                 isLeaf
                 result="Not Risky"
                 isPath={isPath('chol>220_bs<=125')}
@@ -231,7 +225,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
-                condition="Risky"
                 isLeaf
                 result="Risky"
                 isPath={isPath('chol<=220_bp>130')}
@@ -240,7 +233,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">No</span>
               <TreeNode
-                condition="Not Risky"
                 isLeaf
                 result="Not Risky"
                 isPath={isPath('chol<=220_bp<=130')}
@@ -260,7 +252,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">Yes</span>
             <TreeNode
-              condition="Risky"
               isLeaf
               result="Risky"
               isPath={isPath('hr>85_bs>110')}
@@ -269,7 +260,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">No</span>
             <TreeNode
-              condition="Not Risky"
               isLeaf
               result="Not Risky"
               isPath={isPath('hr>85_bs<=110')}
@@ -283,7 +273,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">Yes</span>
             <TreeNode
-              condition="Risky"
               isLeaf
               result="Risky"
               isPath={isPath('hr<=85_chol>200')}
@@ -292,7 +281,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">No</span>
             <TreeNode
-              condition="Not Risky"
               isLeaf
               result="Not Risky"
               isPath={isPath('hr<=85_chol<=200')}
@@ -569,18 +557,30 @@ export default function PredictPage() {
                 isPredicting ? 'opacity-100' : 'opacity-0'
               )}
             >
-              <div className="flex flex-col items-center space-y-2">
-                 <h3 className="font-semibold">Tree 1</h3>
-                <DecisionTree vitals={vitals} treeId={1} isActive={isPredicting} />
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                 <h3 className="font-semibold">Tree 2</h3>
-                <DecisionTree vitals={vitals} treeId={2} isActive={isPredicting} />
-              </div>
-               <div className="flex flex-col items-center space-y-2">
-                 <h3 className="font-semibold">Tree 3</h3>
-                <DecisionTree vitals={vitals} treeId={3} isActive={isPredicting} />
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-center">Tree 1</CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center">
+                  <DecisionTree vitals={vitals} treeId={1} isActive={isPredicting} />
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-center">Tree 2</CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center">
+                  <DecisionTree vitals={vitals} treeId={2} isActive={isPredicting} />
+                </CardContent>
+              </Card>
+               <Card>
+                <CardHeader>
+                  <CardTitle className="text-center">Tree 3</CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center">
+                  <DecisionTree vitals={vitals} treeId={3} isActive={isPredicting} />
+                </CardContent>
+              </Card>
             </div>
           </div>
         )}
