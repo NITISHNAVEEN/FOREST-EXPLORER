@@ -328,38 +328,38 @@ export default function PredictPage() {
     setPrediction(null);
     setTreeResults([]);
 
-    const results: ('Risky' | 'Not Risky')[] = [];
-    const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
-    const bpSys = parseInt(bloodPressure.split('/')[0]);
-    const chol = parseInt(cholesterol);
-    const hr = parseInt(heartRate);
-    const bs = parseInt(bloodSugar);
-
-    // Tree 1 logic
-    if (bpSys > 140) results.push('Risky');
-    else if (hr > 90) results.push('Risky');
-    else results.push('Not Risky');
-
-    // Tree 2 logic
-    if (chol > 220 && bs > 125) results.push('Risky');
-    else if (chol <= 220 && bpSys > 130) results.push('Risky');
-    else if (chol > 220 && bs <= 125) results.push('Not Risky');
-    else results.push('Not Risky');
-
-    // Tree 3 logic
-    if (hr > 85 && bs > 110) results.push('Risky');
-    else if (hr <= 85 && chol > 200) results.push('Risky');
-    else if (hr > 85 && bs <= 110) results.push('Not Risky');
-    else results.push('Not Risky');
-
-    setTreeResults(results);
-
-    const riskyCount = results.filter((r) => r === 'Risky').length;
-    const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
-
     setTimeout(() => {
+      const results: ('Risky' | 'Not Risky')[] = [];
+      const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
+      const bpSys = parseInt(bloodPressure.split('/')[0]);
+      const chol = parseInt(cholesterol);
+      const hr = parseInt(heartRate);
+      const bs = parseInt(bloodSugar);
+
+      // Tree 1 logic
+      if (bpSys > 140) results.push('Risky');
+      else if (hr > 90) results.push('Risky');
+      else results.push('Not Risky');
+
+      // Tree 2 logic
+      if (chol > 220 && bs > 125) results.push('Risky');
+      else if (chol <= 220 && bpSys > 130) results.push('Risky');
+      else if (chol > 220 && bs <= 125) results.push('Not Risky');
+      else results.push('Not Risky');
+
+      // Tree 3 logic
+      if (hr > 85 && bs > 110) results.push('Risky');
+      else if (hr <= 85 && chol > 200) results.push('Risky');
+      else if (hr > 85 && bs <= 110) results.push('Not Risky');
+      else results.push('Not Risky');
+
+      setTreeResults(results);
+
+      const riskyCount = results.filter((r) => r === 'Risky').length;
+      const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
+
       setPrediction(finalPrediction);
-      setIsPredicting(false); 
+      setIsPredicting(false);
     }, 4000); // Wait for animations to play
   };
 
