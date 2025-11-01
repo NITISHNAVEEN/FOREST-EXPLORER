@@ -381,37 +381,6 @@ export default function PredictPage() {
     return null;
   }
 
-  const renderParticles = (isPredicting: boolean) => {
-    const positions = [
-      { top: '0%', right: '0%', id: 'bp' },
-      { top: '0%', left: '0%', id: 'chol' },
-      { bottom: '0%', left: '0%', id: 'hr' },
-      { bottom: '0%', right: '0%', id: 'bs' },
-    ];
-
-    return positions.map((pos) =>
-      Array.from({ length: 5 }).map((_, i) => (
-        <div
-          key={`${pos.id}-${i}`}
-          className={cn(
-            'absolute w-2 h-2 bg-primary rounded-full z-20',
-            'transition-all ease-in-out duration-[1500ms]',
-            isPredicting
-              ? 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-50 opacity-0'
-              : 'scale-100 opacity-100'
-          )}
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-            bottom: pos.bottom,
-            transitionDelay: `${i * 100}ms`,
-          }}
-        />
-      ))
-    );
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-30 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm">
@@ -446,7 +415,6 @@ export default function PredictPage() {
               data-ai-hint={placeholderImages.human_body_scan['data-ai-hint']}
               className="object-contain"
             />
-            {renderParticles(isPredicting)}
             <div className="absolute top-0 right-0">
               <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                 <CardHeader className="p-3">
