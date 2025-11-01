@@ -150,10 +150,10 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
 
   if (treeId === 1) {
     return (
-      <TreeNode condition="Pressure > 140?" isPath={isPath('root')}>
+      <TreeNode condition="Blood Pressure > 140?" isPath={isPath('root')}>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">Yes</span>
-          <TreeNode condition="Chol > 240?" isPath={isPath('bp>140')}>
+          <TreeNode condition="Cholesterol > 240?" isPath={isPath('bp>140')}>
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
@@ -199,7 +199,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
 
   if (treeId === 2) {
     return (
-      <TreeNode condition="Chol > 220?" isPath={isPath('root')}>
+      <TreeNode condition="Cholesterol > 220?" isPath={isPath('root')}>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">Yes</span>
           <TreeNode condition="Sugar > 125?" isPath={isPath('chol>220')}>
@@ -223,7 +223,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
         </div>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">No</span>
-          <TreeNode condition="Pressure > 130?" isPath={isPath('chol<=220')}>
+          <TreeNode condition="Blood Pressure > 130?" isPath={isPath('chol<=220')}>
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
@@ -271,7 +271,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
       </div>
       <div className="flex flex-col items-center">
         <span className="text-xs mb-1">No</span>
-        <TreeNode condition="Chol > 200?" isPath={isPath('hr<=85')}>
+        <TreeNode condition="Cholesterol > 200?" isPath={isPath('hr<=85')}>
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">Yes</span>
             <TreeNode
