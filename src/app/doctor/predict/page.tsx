@@ -324,6 +324,8 @@ export default function PredictPage() {
 
   const handlePredict = () => {
     setIsPredicting(true);
+    setPrediction(null);
+    setTreeResults([]);
 
     const results: ('Risky' | 'Not Risky')[] = [];
     const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
@@ -417,113 +419,114 @@ export default function PredictPage() {
         </h1>
       </header>
       <main className="flex-1 p-4 md:p-6 flex flex-col items-center">
-        {!isPredicting && !prediction ? (
-          <div className="w-full max-w-2xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground">
-                Patient Vitals Input
-              </h2>
-              <p className="mt-2 text-lg text-muted-foreground">
-                Enter the patient's vitals to predict the risk of a heart
-                attack.
-              </p>
-            </div>
-            <div
-              className="relative flex justify-center items-center"
-              style={{ minHeight: '300px' }}
-            >
-              <Image
-                src={placeholderImages.human_body_scan.src}
-                alt="Human Body"
-                width={200}
-                height={300}
-                data-ai-hint={placeholderImages.human_body_scan['data-ai-hint']}
-                className="object-contain"
-              />
-              {renderParticles(isPredicting)}
-              <div className="absolute top-0 right-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3">
-                    <CardTitle className="text-base">Blood Pressure</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="bp"
-                      value={vitals.bloodPressure}
-                      onChange={(e) =>
-                        handleInputChange('bloodPressure', e.target.value)
-                      }
-                      placeholder="e.g. 120/80"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute top-0 left-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3">
-                    <CardTitle className="text-base">Cholesterol</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="chol"
-                      value={vitals.cholesterol}
-                      onChange={(e) =>
-                        handleInputChange('cholesterol', e.target.value)
-                      }
-                      placeholder="e.g. 200"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute bottom-0 left-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3">
-                    <CardTitle className="text-base">Heart Rate</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="hr"
-                      value={vitals.heartRate}
-                      onChange={(e) =>
-                        handleInputChange('heartRate', e.target.value)
-                      }
-                      placeholder="e.g. 75"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute bottom-0 right-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3">
-                    <CardTitle className="text-base">Blood Sugar</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="bs"
-                      value={vitals.bloodSugar}
-                      onChange={(e) =>
-                        handleInputChange('bloodSugar', e.target.value)
-                      }
-                      placeholder="e.g. 99"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            {allFieldsFilled && (
-              <div className="flex justify-center mt-8">
-                <Button size="lg" onClick={handlePredict}>
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Predict
-                </Button>
-              </div>
-            )}
+        <div className="w-full max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">
+              Patient Vitals Input
+            </h2>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Enter the patient's vitals to predict the risk of a heart attack.
+            </p>
           </div>
-        ) : (
+          <div
+            className="relative flex justify-center items-center"
+            style={{ minHeight: '300px' }}
+          >
+            <Image
+              src={placeholderImages.human_body_scan.src}
+              alt="Human Body"
+              width={200}
+              height={300}
+              data-ai-hint={placeholderImages.human_body_scan['data-ai-hint']}
+              className="object-contain"
+            />
+            {renderParticles(isPredicting)}
+            <div className="absolute top-0 right-0">
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className="p-3">
+                  <CardTitle className="text-base">Blood Pressure</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <Input
+                    id="bp"
+                    value={vitals.bloodPressure}
+                    onChange={(e) =>
+                      handleInputChange('bloodPressure', e.target.value)
+                    }
+                    placeholder="e.g. 120/80"
+                    className="text-xs h-8"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+            <div className="absolute top-0 left-0">
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className="p-3">
+                  <CardTitle className="text-base">Cholesterol</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <Input
+                    id="chol"
+                    value={vitals.cholesterol}
+                    onChange={(e) =>
+                      handleInputChange('cholesterol', e.target.value)
+                    }
+                    placeholder="e.g. 200"
+                    className="text-xs h-8"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+            <div className="absolute bottom-0 left-0">
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className="p-3">
+                  <CardTitle className="text-base">Heart Rate</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <Input
+                    id="hr"
+                    value={vitals.heartRate}
+                    onChange={(e) =>
+                      handleInputChange('heartRate', e.target.value)
+                    }
+                    placeholder="e.g. 75"
+                    className="text-xs h-8"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+            <div className="absolute bottom-0 right-0">
+              <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
+                <CardHeader className="p-3">
+                  <CardTitle className="text-base">Blood Sugar</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <Input
+                    id="bs"
+                    value={vitals.bloodSugar}
+                    onChange={(e) =>
+                      handleInputChange('bloodSugar', e.target.value)
+                    }
+                    placeholder="e.g. 99"
+                    className="text-xs h-8"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button
+              size="lg"
+              onClick={handlePredict}
+              disabled={!allFieldsFilled || isPredicting}
+            >
+              <Sparkles className="w-5 h-5 mr-2" />
+              {isPredicting ? 'Analyzing...' : 'Predict'}
+            </Button>
+          </div>
+        </div>
+
+        {(isPredicting || prediction) && (
           <div className="flex flex-col items-center w-full mt-8">
             <h2 className="text-2xl font-bold mb-4">
               {prediction ? 'Prediction Result' : 'Analyzing Patient Data...'}
