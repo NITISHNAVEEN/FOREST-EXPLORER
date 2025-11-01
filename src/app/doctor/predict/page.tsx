@@ -51,10 +51,11 @@ const TreeNode = ({
       className={cn(
         'p-1.5 rounded-md border-2 bg-card text-card-foreground shadow-sm transition-all duration-500 min-w-[90px] text-center text-xs',
         {
-          'border-primary bg-primary/10': isPath,
-          'border-destructive bg-destructive/10': isLeaf && result === 'Risky',
+          'border-primary bg-primary/10': isPath && isLeaf,
+          'border-destructive bg-destructive/10':
+            isLeaf && result === 'Risky' && !isPath,
           'border-green-500 bg-green-500/10':
-            isLeaf && result === 'Not Risky',
+            isLeaf && result === 'Not Risky' && !isPath,
         }
       )}
     >
@@ -145,6 +146,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   }, [isActive, vitals, treeId]);
 
   const isPath = (id: string) => isActive && paths.includes(id);
+  const isFinalNode = (id: string) => isActive && paths[paths.length - 1] === id;
 
   if (treeId === 1) {
     return (
@@ -157,7 +159,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isPath('bp>140_chol>240')}
+                isPath={isFinalNode('bp>140_chol>240')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -165,7 +167,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isPath('bp>140_chol<=240')}
+                isPath={isFinalNode('bp>140_chol<=240')}
               />
             </div>
           </TreeNode>
@@ -178,7 +180,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isPath('bp<=140_hr>90')}
+                isPath={isFinalNode('bp<=140_hr>90')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -186,7 +188,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isPath('bp<=140_hr<=90')}
+                isPath={isFinalNode('bp<=140_hr<=90')}
               />
             </div>
           </TreeNode>
@@ -206,7 +208,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isPath('chol>220_bs>125')}
+                isPath={isFinalNode('chol>220_bs>125')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -214,7 +216,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isPath('chol>220_bs<=125')}
+                isPath={isFinalNode('chol>220_bs<=125')}
               />
             </div>
           </TreeNode>
@@ -227,7 +229,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isPath('chol<=220_bp>130')}
+                isPath={isFinalNode('chol<=220_bp>130')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -235,7 +237,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isPath('chol<=220_bp<=130')}
+                isPath={isFinalNode('chol<=220_bp<=130')}
               />
             </div>
           </TreeNode>
@@ -254,7 +256,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Risky"
-              isPath={isPath('hr>85_bs>110')}
+              isPath={isFinalNode('hr>85_bs>110')}
             />
           </div>
           <div className="flex flex-col items-center">
@@ -262,7 +264,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Not Risky"
-              isPath={isPath('hr>85_bs<=110')}
+              isPath={isFinalNode('hr>85_bs<=110')}
             />
           </div>
         </TreeNode>
@@ -275,7 +277,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Risky"
-              isPath={isPath('hr<=85_chol>200')}
+              isPath={isFinalNode('hr<=85_chol>200')}
             />
           </div>
           <div className="flex flex-col items-center">
@@ -283,7 +285,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Not Risky"
-              isPath={isPath('hr<=85_chol<=200')}
+              isPath={isFinalNode('hr<=85_chol<=200')}
             />
           </div>
         </TreeNode>
