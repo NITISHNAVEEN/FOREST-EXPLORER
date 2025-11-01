@@ -11,15 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import {
   ArrowLeft,
@@ -184,7 +175,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
         </div>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">No</span>
-          <TreeNode condition="HR > 90?" isPath={isPath('bp<=140')}>
+          <TreeNode condition="Heart Rate > 90?" isPath={isPath('bp<=140')}>
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
@@ -260,7 +251,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   }
 
   return (
-    <TreeNode condition="HR > 85?" isPath={isPath('root')}>
+    <TreeNode condition="Heart Rate > 85?" isPath={isPath('root')}>
       <div className="flex flex-col items-center">
         <span className="text-xs mb-1">Yes</span>
         <TreeNode condition="Sugar > 110?" isPath={isPath('hr>85')}>
@@ -316,7 +307,6 @@ export default function PredictPage() {
   });
   const [isMounted, setIsMounted] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
-  const [showResultDialog, setShowResultDialog] = useState(false);
   const [prediction, setPrediction] = useState<'Risky' | 'Not Risky' | null>(
     null
   );
@@ -364,13 +354,11 @@ export default function PredictPage() {
 
     setTimeout(() => {
       setPrediction(finalPrediction);
-      setShowResultDialog(true);
     }, 4000); // Wait for animations to play
   };
 
   const reset = () => {
     setIsPredicting(false);
-    setShowResultDialog(false);
     setPrediction(null);
     setTreeResults([]);
   };
@@ -682,41 +670,6 @@ export default function PredictPage() {
             )}
           </div>
         )}
-
-        <AlertDialog open={showResultDialog} onOpenChange={setShowResultDialog}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-2xl text-center">
-                Prediction Result
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-center">
-                Based on the Random Forest model, the patient is classified as:
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <div className="flex flex-col items-center justify-center p-6">
-              {prediction === 'Risky' ? (
-                <>
-                  <HeartCrack className="w-16 h-16 text-destructive animate-pulse" />
-                  <p className="mt-4 text-2xl font-bold text-destructive">
-                    RISKY
-                  </p>
-                </>
-              ) : (
-                <>
-                  <HeartPulse className="w-16 h-16 text-green-500" />
-                  <p className="mt-4 text-2xl font-bold text-green-500">
-                    NOT RISKY
-                  </p>
-                </>
-              )}
-            </div>
-            <AlertDialogFooter>
-              <AlertDialogAction onClick={() => setShowResultDialog(false)}>
-                View Details
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </main>
     </div>
   );
