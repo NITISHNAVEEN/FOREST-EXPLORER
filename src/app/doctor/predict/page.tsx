@@ -59,7 +59,6 @@ const TreeNode = ({
       )}
     >
       <p className="font-semibold">{isLeaf ? result : condition}</p>
-      {isLeaf && result && <p className="font-bold mt-1">{null}</p>}
     </div>
     {children && (
       <div className="flex justify-center mt-2 space-x-4">{children}</div>
@@ -566,7 +565,7 @@ export default function PredictPage() {
 
             <div
               className={cn(
-                'flex flex-col md:flex-row justify-around w-full gap-8 transition-opacity duration-1000',
+                'flex flex-col w-full lg:w-2/3 gap-8 transition-opacity duration-1000',
                 isPredicting ? 'opacity-100' : 'opacity-0'
               )}
             >
