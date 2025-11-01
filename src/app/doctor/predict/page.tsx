@@ -51,7 +51,7 @@ const TreeNode = ({
       className={cn(
         'p-1.5 rounded-md border-2 bg-card text-card-foreground shadow-sm transition-all duration-500 min-w-[90px] text-center text-xs',
         {
-          'border-primary bg-primary/10': isPath && isLeaf,
+          'border-primary bg-primary/10': isPath,
           'border-destructive bg-destructive/10':
             isLeaf && result === 'Risky' && !isPath,
           'border-green-500 bg-green-500/10':
@@ -146,8 +146,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   }, [isActive, vitals, treeId]);
 
   const isPath = (id: string) => isActive && paths.includes(id);
-  const isFinalNode = (id: string) =>
-    isActive && paths[paths.length - 1] === id;
 
   if (treeId === 1) {
     return (
@@ -160,7 +158,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isFinalNode('bp>140_chol>240')}
+                isPath={isPath('bp>140_chol>240')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -168,7 +166,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isFinalNode('bp>140_chol<=240')}
+                isPath={isPath('bp>140_chol<=240')}
               />
             </div>
           </TreeNode>
@@ -181,7 +179,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isFinalNode('bp<=140_hr>90')}
+                isPath={isPath('bp<=140_hr>90')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -189,7 +187,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isFinalNode('bp<=140_hr<=90')}
+                isPath={isPath('bp<=140_hr<=90')}
               />
             </div>
           </TreeNode>
@@ -203,13 +201,13 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
       <TreeNode condition="Cholesterol > 220?" isPath={isPath('root')}>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">Yes</span>
-          <TreeNode condition="Sugar > 125?" isPath={isPath('chol>220')}>
+          <TreeNode condition="Blood Sugar > 125?" isPath={isPath('chol>220')}>
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isFinalNode('chol>220_bs>125')}
+                isPath={isPath('chol>220_bs>125')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -217,7 +215,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isFinalNode('chol>220_bs<=125')}
+                isPath={isPath('chol>220_bs<=125')}
               />
             </div>
           </TreeNode>
@@ -233,7 +231,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Risky"
-                isPath={isFinalNode('chol<=220_bp>130')}
+                isPath={isPath('chol<=220_bp>130')}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -241,7 +239,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
               <TreeNode
                 isLeaf
                 result="Not Risky"
-                isPath={isFinalNode('chol<=220_bp<=130')}
+                isPath={isPath('chol<=220_bp<=130')}
               />
             </div>
           </TreeNode>
@@ -254,13 +252,13 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
     <TreeNode condition="Heart Rate > 85?" isPath={isPath('root')}>
       <div className="flex flex-col items-center">
         <span className="text-xs mb-1">Yes</span>
-        <TreeNode condition="Sugar > 110?" isPath={isPath('hr>85')}>
+        <TreeNode condition="Blood Sugar > 110?" isPath={isPath('hr>85')}>
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1">Yes</span>
             <TreeNode
               isLeaf
               result="Risky"
-              isPath={isFinalNode('hr>85_bs>110')}
+              isPath={isPath('hr>85_bs>110')}
             />
           </div>
           <div className="flex flex-col items-center">
@@ -268,7 +266,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Not Risky"
-              isPath={isFinalNode('hr>85_bs<=110')}
+              isPath={isPath('hr>85_bs<=110')}
             />
           </div>
         </TreeNode>
@@ -281,7 +279,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Risky"
-              isPath={isFinalNode('hr<=85_chol>200')}
+              isPath={isPath('hr<=85_chol>200')}
             />
           </div>
           <div className="flex flex-col items-center">
@@ -289,7 +287,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
             <TreeNode
               isLeaf
               result="Not Risky"
-              isPath={isFinalNode('hr<=85_chol<=200')}
+              isPath={isPath('hr<=85_chol<=200')}
             />
           </div>
         </TreeNode>
@@ -342,11 +340,13 @@ export default function PredictPage() {
     // Tree 2 logic
     if (chol > 220 && bs > 125) results.push('Risky');
     else if (chol <= 220 && bpSys > 130) results.push('Risky');
+    else if (chol > 220 && bs <= 125) results.push('Not Risky');
     else results.push('Not Risky');
 
     // Tree 3 logic
     if (hr > 85 && bs > 110) results.push('Risky');
     else if (hr <= 85 && chol > 200) results.push('Risky');
+    else if (hr > 85 && bs <= 110) results.push('Not Risky');
     else results.push('Not Risky');
 
     setTreeResults(results);
