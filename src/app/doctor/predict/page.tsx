@@ -648,7 +648,7 @@ export default function PredictPage() {
                     ))}
                   </div>
 
-                  <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90 sm:rotate-0" />
+                  <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
 
                   <div className="flex flex-col items-center space-y-2">
                     <div
