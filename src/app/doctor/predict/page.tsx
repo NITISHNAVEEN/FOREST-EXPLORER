@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -20,7 +21,13 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Sparkles, HeartCrack, HeartPulse } from 'lucide-react';
+import {
+  ArrowLeft,
+  Sparkles,
+  HeartCrack,
+  HeartPulse,
+  Info,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/lib/placeholder-images.json';
 
@@ -146,7 +153,8 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   }, [isActive, vitals, treeId]);
 
   const isPath = (id: string) => isActive && paths.includes(id);
-  const isFinalNode = (id: string) => isActive && paths[paths.length - 1] === id;
+  const isFinalNode = (id: string) =>
+    isActive && paths[paths.length - 1] === id;
 
   if (treeId === 1) {
     return (
@@ -223,7 +231,10 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
         </div>
         <div className="flex flex-col items-center">
           <span className="text-xs mb-1">No</span>
-          <TreeNode condition="Blood Pressure > 130?" isPath={isPath('chol<=220')}>
+          <TreeNode
+            condition="Blood Pressure > 130?"
+            isPath={isPath('chol<=220')}
+          >
             <div className="flex flex-col items-center">
               <span className="text-xs mb-1">Yes</span>
               <TreeNode
@@ -307,6 +318,9 @@ export default function PredictPage() {
   const [prediction, setPrediction] = useState<'Risky' | 'Not Risky' | null>(
     null
   );
+  const [treeResults, setTreeResults] = useState<
+    ('Risky' | 'Not Risky')[]
+  >([]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -341,9 +355,11 @@ export default function PredictPage() {
     else if (hr <= 85 && chol > 200) results.push('Risky');
     else results.push('Not Risky');
 
+    setTreeResults(results);
+
     const riskyCount = results.filter((r) => r === 'Risky').length;
     const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
-    
+
     setTimeout(() => {
       setPrediction(finalPrediction);
       setShowResultDialog(true);
@@ -354,6 +370,7 @@ export default function PredictPage() {
     setIsPredicting(false);
     setShowResultDialog(false);
     setPrediction(null);
+    setTreeResults([]);
   };
 
   const allFieldsFilled =
@@ -532,7 +549,8 @@ export default function PredictPage() {
                         RISKY
                       </p>
                       <p className="text-muted-foreground mt-2">
-                        Based on the Random Forest model, the patient is at high risk.
+                        Based on the Random Forest model, the patient is at high
+                        risk.
                       </p>
                     </>
                   ) : (
@@ -542,13 +560,14 @@ export default function PredictPage() {
                         NOT RISKY
                       </p>
                       <p className="text-muted-foreground mt-2">
-                        Based on the Random Forest model, the patient is at low risk.
+                        Based on the Random Forest model, the patient is at low
+                        risk.
                       </p>
                     </>
                   )}
-                   <Button onClick={reset} className="mt-6">
-                      Run New Prediction
-                    </Button>
+                  <Button onClick={reset} className="mt-6">
+                    Run New Prediction
+                  </Button>
                 </CardContent>
               </Card>
             )}
@@ -559,31 +578,73 @@ export default function PredictPage() {
                 isPredicting ? 'opacity-100' : 'opacity-0'
               )}
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-center text-lg">Tree 1</CardTitle>
-                </CardHeader>
-                <CardContent className="flex justify-center p-4">
-                  <DecisionTree vitals={vitals} treeId={1} isActive={isPredicting} />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-center text-lg">Tree 2</CardTitle>
-                </CardHeader>
-                <CardContent className="flex justify-center p-4">
-                  <DecisionTree vitals={vitals} treeId={2} isActive={isPredicting} />
-                </CardContent>
-              </Card>
-               <Card>
-                <CardHeader>
-                  <CardTitle className="text-center text-lg">Tree 3</CardTitle>
-                </CardHeader>
-                <CardContent className="flex justify-center p-4">
-                  <DecisionTree vitals={vitals} treeId={3} isActive={isPredicting} />
-                </CardContent>
-              </Card>
+              {[1, 2, 3].map((treeId) => (
+                <Card key={treeId}>
+                  <CardHeader>
+                    <CardTitle className="text-center text-lg">
+                      Tree {treeId}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex justify-center p-4">
+                    <DecisionTree
+                      vitals={vitals}
+                      treeId={treeId}
+                      isActive={isPredicting}
+                    />
+                  </CardContent>
+                  {treeResults.length > 0 && (
+                    <CardFooter className="flex justify-center text-sm font-medium">
+                      Prediction:{' '}
+                      <span
+                        className={cn('font-bold ml-1', {
+                          'text-destructive': treeResults[treeId - 1] === 'Risky',
+                          'text-green-500':
+                            treeResults[treeId - 1] === 'Not Risky',
+                        })}
+                      >
+                        {treeResults[treeId - 1]}
+                      </span>
+                    </CardFooter>
+                  )}
+                </Card>
+              ))}
             </div>
+
+            {prediction && (
+              <Card className="mt-8 w-full max-w-3xl">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Info className="w-6 h-6" />
+                    How the Final Prediction is Made
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-muted-foreground">
+                  <p>
+                    The Random Forest algorithm uses multiple decision trees to
+                    make a final prediction. Each tree independently analyzes
+                    the patient's data and makes its own decision.
+                  </p>
+                  <p className="mt-2">
+                    The final result is determined by a majority vote. In this
+                    case,{' '}
+                    <b>
+                      {treeResults.filter((r) => r === prediction).length} out of
+                      3
+                    </b>{' '}
+                    trees predicted the patient is{' '}
+                    <span
+                      className={cn('font-bold', {
+                        'text-destructive': prediction === 'Risky',
+                        'text-green-500': prediction === 'Not Risky',
+                      })}
+                    >
+                      {prediction}
+                    </span>
+                    , making it the final outcome.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         )}
 
@@ -625,3 +686,5 @@ export default function PredictPage() {
     </div>
   );
 }
+
+    
