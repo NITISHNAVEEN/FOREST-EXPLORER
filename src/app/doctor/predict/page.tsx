@@ -556,7 +556,7 @@ export default function PredictPage() {
               <>
                 <Card className="mt-8 w-full max-w-3xl">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center justify-center gap-2">
                       <Vote className="w-6 h-6" />
                       How the Final Prediction is Made
                     </CardTitle>
