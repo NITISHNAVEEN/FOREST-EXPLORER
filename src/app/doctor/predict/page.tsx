@@ -71,7 +71,7 @@ const TreeNode = ({
 );
 
 type DecisionTreeProps = {
-  vitals: Vitals;
+  vitals: Vitals | null;
   treeId: number;
   isActive: boolean;
 };
@@ -80,7 +80,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   const [paths, setPaths] = useState<string[]>([]);
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive && vitals) {
       const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
       const bpSys = parseInt(bloodPressure.split('/')[0]);
       const chol = parseInt(cholesterol);
@@ -140,10 +140,10 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           }
         }
       }
-
+      
       const timeout = setTimeout(() => setPaths(currentPath), 1000);
       return () => clearTimeout(timeout);
-    } else {
+    } else if (!isActive) {
       setPaths([]);
     }
   }, [isActive, vitals, treeId]);
@@ -306,6 +306,7 @@ export default function PredictPage() {
     heartRate: '75',
     bloodSugar: '99',
   });
+  const [vitalsForPrediction, setVitalsForPrediction] = useState<Vitals | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [isPredicting, setIsPredicting] = useState(false);
   const [prediction, setPrediction] = useState<'Risky' | 'Not Risky' | null>(
@@ -327,6 +328,7 @@ export default function PredictPage() {
     setIsPredicting(true);
     setPrediction(null);
     setTreeResults([]);
+    setVitalsForPrediction(vitals);
 
     setTimeout(() => {
       const results: ('Risky' | 'Not Risky')[] = [];
@@ -366,6 +368,7 @@ export default function PredictPage() {
   const reset = () => {
     setPrediction(null);
     setTreeResults([]);
+    setVitalsForPrediction(null);
   };
 
   const allFieldsFilled =
@@ -558,7 +561,7 @@ export default function PredictPage() {
                   </CardHeader>
                   <CardContent className="flex justify-center p-4">
                     <DecisionTree
-                      vitals={vitals}
+                      vitals={vitalsForPrediction}
                       treeId={treeId}
                       isActive={isPredicting || !!prediction}
                     />
