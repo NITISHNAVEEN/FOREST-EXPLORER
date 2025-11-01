@@ -53,9 +53,9 @@ const TreeNode = ({
         {
           'border-primary bg-primary/10': isPath,
           'border-destructive bg-destructive/10':
-            isLeaf && result === 'Risky' && !isPath,
+            isLeaf && result === 'Risky' && isPath,
           'border-green-500 bg-green-500/10':
-            isLeaf && result === 'Not Risky' && !isPath,
+            isLeaf && result === 'Not Risky' && isPath,
         }
       )}
     >
@@ -356,11 +356,11 @@ export default function PredictPage() {
 
     setTimeout(() => {
       setPrediction(finalPrediction);
+      setIsPredicting(false); 
     }, 4000); // Wait for animations to play
   };
 
   const reset = () => {
-    setIsPredicting(false);
     setPrediction(null);
     setTreeResults([]);
   };
@@ -515,60 +515,35 @@ export default function PredictPage() {
             </div>
           </div>
           <div className="flex justify-center mt-8">
-            <Button
-              size="lg"
-              onClick={handlePredict}
-              disabled={!allFieldsFilled || isPredicting}
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              {isPredicting ? 'Analyzing...' : 'Predict'}
-            </Button>
+            {prediction ? (
+              <Button size="lg" onClick={reset}>
+                Run New Prediction
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                onClick={handlePredict}
+                disabled={!allFieldsFilled || isPredicting}
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                {isPredicting ? 'Analyzing...' : 'Predict'}
+              </Button>
+            )}
           </div>
         </div>
 
         {(isPredicting || prediction) && (
           <div className="flex flex-col items-center w-full mt-8">
             <h2 className="text-2xl font-bold mb-4">
-              {prediction ? 'Prediction Result' : 'Analyzing Patient Data...'}
+              {prediction
+                ? 'Prediction Details'
+                : 'Analyzing Patient Data...'}
             </h2>
-
-            {prediction && (
-              <Card className="mb-8 w-full max-w-md shadow-lg">
-                <CardContent className="p-6 flex flex-col items-center justify-center">
-                  {prediction === 'Risky' ? (
-                    <>
-                      <HeartCrack className="w-16 h-16 text-destructive animate-pulse" />
-                      <p className="mt-4 text-3xl font-bold text-destructive">
-                        RISKY
-                      </p>
-                      <p className="text-muted-foreground mt-2">
-                        Based on the Random Forest model, the patient is at high
-                        risk.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <HeartPulse className="w-16 h-16 text-green-500" />
-                      <p className="mt-4 text-3xl font-bold text-green-500">
-                        NOT RISKY
-                      </p>
-                      <p className="text-muted-foreground mt-2">
-                        Based on the Random Forest model, the patient is at low
-                        risk.
-                      </p>
-                    </>
-                  )}
-                  <Button onClick={reset} className="mt-6">
-                    Run New Prediction
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
-
+            
             <div
               className={cn(
                 'grid grid-cols-1 lg:grid-cols-3 gap-4 w-full transition-opacity duration-1000',
-                isPredicting ? 'opacity-100' : 'opacity-0'
+                (isPredicting || prediction) ? 'opacity-100' : 'opacity-0'
               )}
             >
               {[1, 2, 3].map((treeId) => (
@@ -582,7 +557,7 @@ export default function PredictPage() {
                     <DecisionTree
                       vitals={vitals}
                       treeId={treeId}
-                      isActive={isPredicting}
+                      isActive={isPredicting || !!prediction}
                     />
                   </CardContent>
                   {treeResults.length > 0 && (
