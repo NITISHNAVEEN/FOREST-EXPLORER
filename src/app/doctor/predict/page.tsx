@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -49,7 +49,7 @@ const TreeNode = ({
   <div className="flex flex-col items-center relative">
     <div
       className={cn(
-        'p-2 rounded-lg border-2 bg-card text-card-foreground shadow-sm transition-all duration-500 min-w-[120px] text-center text-xs',
+        'p-1.5 rounded-md border-2 bg-card text-card-foreground shadow-sm transition-all duration-500 min-w-[90px] text-center text-xs',
         {
           'border-primary bg-primary/10': isPath,
           'border-destructive bg-destructive/10': isLeaf && result === 'Risky',
@@ -61,7 +61,7 @@ const TreeNode = ({
       <p className="font-semibold">{isLeaf ? result : condition}</p>
     </div>
     {children && (
-      <div className="flex justify-center mt-2 space-x-4">{children}</div>
+      <div className="flex justify-center mt-2 space-x-2">{children}</div>
     )}
   </div>
 );
@@ -553,31 +553,31 @@ export default function PredictPage() {
 
             <div
               className={cn(
-                'flex flex-col w-full lg:w-2/3 gap-8 transition-opacity duration-1000',
+                'grid grid-cols-1 lg:grid-cols-3 gap-4 w-full transition-opacity duration-1000',
                 isPredicting ? 'opacity-100' : 'opacity-0'
               )}
             >
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-center">Tree 1</CardTitle>
+                  <CardTitle className="text-center text-lg">Tree 1</CardTitle>
                 </CardHeader>
-                <CardContent className="flex justify-center">
+                <CardContent className="flex justify-center p-4">
                   <DecisionTree vitals={vitals} treeId={1} isActive={isPredicting} />
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-center">Tree 2</CardTitle>
+                  <CardTitle className="text-center text-lg">Tree 2</CardTitle>
                 </CardHeader>
-                <CardContent className="flex justify-center">
+                <CardContent className="flex justify-center p-4">
                   <DecisionTree vitals={vitals} treeId={2} isActive={isPredicting} />
                 </CardContent>
               </Card>
                <Card>
                 <CardHeader>
-                  <CardTitle className="text-center">Tree 3</CardTitle>
+                  <CardTitle className="text-center text-lg">Tree 3</CardTitle>
                 </CardHeader>
-                <CardContent className="flex justify-center">
+                <CardContent className="flex justify-center p-4">
                   <DecisionTree vitals={vitals} treeId={3} isActive={isPredicting} />
                 </CardContent>
               </Card>
