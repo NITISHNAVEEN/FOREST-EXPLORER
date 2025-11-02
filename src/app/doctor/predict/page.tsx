@@ -24,6 +24,9 @@ import {
   ShieldCheck,
   BarChart,
   Info,
+  Droplets,
+  Activity,
+  GlassWater,
 } from 'lucide-react';
 import {
   Tooltip,
@@ -350,6 +353,41 @@ export default function PredictPage() {
     : 0;
   const notRiskyVotes = prediction ? treeResults.length - riskyVotes : 0;
 
+  const vitalInputs = [
+    {
+      id: 'bp',
+      field: 'bloodPressure',
+      label: 'Blood Pressure',
+      icon: Activity,
+      tooltip: 'The pressure of circulating blood on the artery walls.',
+      placeholder: 'e.g. 120',
+    },
+    {
+      id: 'chol',
+      field: 'cholesterol',
+      label: 'Cholesterol',
+      icon: Droplets,
+      tooltip: 'A waxy substance found in your blood.',
+      placeholder: 'e.g. 200',
+    },
+    {
+      id: 'hr',
+      field: 'heartRate',
+      label: 'Heart Rate',
+      icon: HeartPulse,
+      tooltip: 'The number of times the heart beats per minute.',
+      placeholder: 'e.g. 75',
+    },
+    {
+      id: 'bs',
+      field: 'bloodSugar',
+      label: 'Blood Sugar',
+      icon: GlassWater,
+      tooltip: 'The concentration of glucose in the blood.',
+      placeholder: 'e.g. 99',
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-30 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm">
@@ -363,7 +401,7 @@ export default function PredictPage() {
         </h1>
       </header>
       <main className="flex-1 p-4 md:p-6 flex flex-col items-center">
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold tracking-tight text-foreground">
               Patient Vitals Input
@@ -373,125 +411,62 @@ export default function PredictPage() {
             </p>
           </div>
           <TooltipProvider>
-            <div
-              className="relative flex justify-center items-center"
-              style={{ minHeight: '400px' }}
-            >
-              <Image
-                src={placeholderImages.human_body_scan.src}
-                alt="Human Body"
-                width={400}
-                height={400}
-                data-ai-hint={placeholderImages.human_body_scan['data-ai-hint']}
-                className="object-contain"
-              />
-              <div className="absolute top-0 right-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3 flex-row items-center justify-between">
-                    <CardTitle className="text-base">Blood Pressure</CardTitle>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="w-4 h-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>
-                          The pressure of circulating blood on the artery walls.
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="bp"
-                      value={vitals.bloodPressure}
-                      onChange={(e) =>
-                        handleInputChange('bloodPressure', e.target.value)
-                      }
-                      placeholder="e.g. 120"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute top-0 left-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3 flex-row items-center justify-between">
-                    <CardTitle className="text-base">Cholesterol</CardTitle>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="w-4 h-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>A waxy substance found in your blood.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="chol"
-                      value={vitals.cholesterol}
-                      onChange={(e) =>
-                        handleInputChange('cholesterol', e.target.value)
-                      }
-                      placeholder="e.g. 200"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute bottom-0 left-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3 flex-row items-center justify-between">
-                    <CardTitle className="text-base">Heart Rate</CardTitle>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="w-4 h-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>The number of times the heart beats per minute.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="hr"
-                      value={vitals.heartRate}
-                      onChange={(e) =>
-                        handleInputChange('heartRate', e.target.value)
-                      }
-                      placeholder="e.g. 75"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="absolute bottom-0 right-0">
-                <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="p-3 flex-row items-center justify-between">
-                    <CardTitle className="text-base">Blood Sugar</CardTitle>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="w-4 h-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>The concentration of glucose in the blood.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </CardHeader>
-                  <CardContent className="p-3">
-                    <Input
-                      id="bs"
-                      value={vitals.bloodSugar}
-                      onChange={(e) =>
-                        handleInputChange('bloodSugar', e.target.value)
-                      }
-                      placeholder="e.g. 99"
-                      className="text-xs h-8"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+            <Card className="bg-blue-50/20 dark:bg-blue-900/10 border-blue-200/50 shadow-sm">
+              <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
+                <div className="w-full h-full rounded-lg overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={placeholderImages.human_body_scan.src}
+                    alt="Human Body"
+                    width={400}
+                    height={400}
+                    data-ai-hint={
+                      placeholderImages.human_body_scan['data-ai-hint']
+                    }
+                    className="object-cover rounded-md"
+                  />
+                </div>
+                <div className="space-y-6">
+                  {vitalInputs.map(
+                    ({ id, field, label, icon: Icon, tooltip, placeholder }) => (
+                      <div key={id} className="flex items-start gap-4">
+                        <div className="p-2.5 bg-background rounded-full border">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <div className="flex items-center justify-between">
+                            <Label htmlFor={id} className="font-semibold">
+                              {label}
+                            </Label>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button>
+                                  <Info className="w-4 h-4 text-muted-foreground" />
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{tooltip}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                          <Input
+                            id={id}
+                            value={vitals[field as keyof Vitals]}
+                            onChange={(e) =>
+                              handleInputChange(
+                                field as keyof Vitals,
+                                e.target.value
+                              )
+                            }
+                            placeholder={placeholder}
+                            className="bg-background/80"
+                          />
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </TooltipProvider>
 
           <div className="mt-8 space-y-4 max-w-sm mx-auto">
@@ -621,15 +596,23 @@ export default function PredictPage() {
                     <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
 
                     <div className="flex flex-col items-center space-y-2">
-                      <div className='flex gap-4 items-center mb-4'>
-                          <div className='text-center'>
-                              <p className='font-bold text-lg text-destructive'>{riskyVotes}</p>
-                              <p className='text-sm text-muted-foreground'>Risky Votes</p>
-                          </div>
-                           <div className='text-center'>
-                              <p className='font-bold text-lg text-green-500'>{notRiskyVotes}</p>
-                              <p className='text-sm text-muted-foreground'>Not Risky Votes</p>
-                          </div>
+                      <div className="flex gap-4 items-center mb-4">
+                        <div className="text-center">
+                          <p className="font-bold text-lg text-destructive">
+                            {riskyVotes}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Risky Votes
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <p className="font-bold text-lg text-green-500">
+                            {notRiskyVotes}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Not Risky Votes
+                          </p>
+                        </div>
                       </div>
                       <div
                         className={cn(
