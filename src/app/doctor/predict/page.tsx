@@ -670,7 +670,7 @@ export default function PredictPage() {
                       </div>
                       <h3 className="font-semibold">Higher Accuracy</h3>
                       <p className="text-sm text-muted-foreground">
-                        The collective decision is more accurate and robust,
+                        The collective decision is more accurate and reliable,
                         leading to better patient outcomes.
                       </p>
                     </div>
