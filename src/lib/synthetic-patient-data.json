@@ -41,5 +41,33 @@
     "heartRate": 68,
     "bloodSugar": 92,
     "target": "risk less"
+  },
+  {
+    "bloodPressure": "145/92",
+    "cholesterol": 230,
+    "heartRate": 88,
+    "bloodSugar": 120,
+    "target": "risky"
+  },
+  {
+    "bloodPressure": "110/70",
+    "cholesterol": 180,
+    "heartRate": 65,
+    "bloodSugar": 90,
+    "target": "risk less"
+  },
+  {
+    "bloodPressure": "170/105",
+    "cholesterol": 290,
+    "heartRate": 100,
+    "bloodSugar": 160,
+    "target": "risky"
+  },
+  {
+    "bloodPressure": "122/80",
+    "cholesterol": 205,
+    "heartRate": 75,
+    "bloodSugar": 100,
+    "target": "risk less"
   }
 ]
