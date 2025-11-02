@@ -82,7 +82,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   useEffect(() => {
     if (isActive && vitals) {
       const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
-      const bpSys = parseInt(bloodPressure.split('/')[0]);
+      const bpSys = parseInt(bloodPressure);
       const chol = parseInt(cholesterol);
       const hr = parseInt(heartRate);
       const bs = parseInt(bloodSugar);
@@ -301,7 +301,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
 
 export default function PredictPage() {
   const [vitals, setVitals] = useState<Vitals>({
-    bloodPressure: '120/80',
+    bloodPressure: '120',
     cholesterol: '200',
     heartRate: '75',
     bloodSugar: '99',
@@ -336,7 +336,7 @@ export default function PredictPage() {
     setTimeout(() => {
       const results: ('Risky' | 'Not Risky')[] = [];
       const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
-      const bpSys = parseInt(bloodPressure.split('/')[0]);
+      const bpSys = parseInt(bloodPressure);
       const chol = parseInt(cholesterol);
       const hr = parseInt(heartRate);
       const bs = parseInt(bloodSugar);
@@ -430,7 +430,7 @@ export default function PredictPage() {
                     onChange={(e) =>
                       handleInputChange('bloodPressure', e.target.value)
                     }
-                    placeholder="e.g. 120/80"
+                    placeholder="e.g. 120"
                     className="text-xs h-8"
                   />
                 </CardContent>

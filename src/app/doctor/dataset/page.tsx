@@ -39,7 +39,7 @@ export default function DatasetPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Blood Pressure</TableHead>
+                    <TableHead>Blood Pressure (Systolic)</TableHead>
                     <TableHead>Cholesterol</TableHead>
                     <TableHead>Heart Rate</TableHead>
                     <TableHead>Blood Sugar</TableHead>
@@ -49,7 +49,7 @@ export default function DatasetPage() {
                 <TableBody>
                   {patientData.map((patient, index) => (
                     <TableRow key={index}>
-                      <TableCell>{patient.bloodPressure}</TableCell>
+                      <TableCell>{patient.bloodPressure.split('/')[0]}</TableCell>
                       <TableCell>{patient.cholesterol}</TableCell>
                       <TableCell>{patient.heartRate}</TableCell>
                       <TableCell>{patient.bloodSugar}</TableCell>
