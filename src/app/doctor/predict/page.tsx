@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -315,7 +315,7 @@ export default function PredictPage() {
     ('Risky' | 'Not Risky')[]
   >([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
@@ -412,13 +412,13 @@ export default function PredictPage() {
           </div>
           <div
             className="relative flex justify-center items-center"
-            style={{ minHeight: '300px' }}
+            style={{ minHeight: '400px' }}
           >
             <Image
               src={placeholderImages.human_body_scan.src}
               alt="Human Body"
-              width={200}
-              height={300}
+              width={400}
+              height={400}
               data-ai-hint={placeholderImages.human_body_scan['data-ai-hint']}
               className="object-contain"
             />

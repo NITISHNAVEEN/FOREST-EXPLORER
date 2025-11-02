@@ -24,10 +24,10 @@
     "data-ai-hint": "human anatomy scan"
   },
   "human_body_scan": {
-    "src": "https://picsum.photos/seed/human-scan/200/300",
-    "width": 200,
-    "height": 300,
-    "data-ai-hint": "medical body scan"
+    "src": "https://images.medicinenet.com/images/article/main_image/circulatory-system-pulmonary-hypertension-heart-illustration-rendering.jpg?output-quality=75",
+    "width": 400,
+    "height": 400,
+    "data-ai-hint": "circulatory system"
   },
   "bp_monitor": {
     "src": "https://picsum.photos/seed/bp-monitor/128/128",
