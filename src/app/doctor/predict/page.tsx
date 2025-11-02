@@ -33,6 +33,8 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
 
 type Vitals = {
   bloodPressure: string;
@@ -72,7 +74,9 @@ const TreeNode = ({
       <p className="font-semibold">{isLeaf ? result : condition}</p>
     </div>
     {children && (
-      <div className="flex justify-center mt-2 space-x-2">{children}</div>
+      <div className="flex justify-center mt-4 space-x-2 relative">
+        {children}
+      </div>
     )}
   </div>
 );
@@ -95,58 +99,53 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
       const bs = parseInt(bloodSugar);
       let currentPath: string[] = [];
 
-      if (treeId === 1) {
-        currentPath.push('root');
-        if (bpSys > 140) {
-          currentPath.push('bp>140');
-          if (chol > 240) {
-            currentPath.push('bp>140_chol>240');
-          } else {
-            currentPath.push('bp>140_chol<=240');
-          }
+      // Pseudo-random logic based on treeId
+      const seed = treeId;
+      const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
+      const op1 = vitalOptions[seed % 4];
+      const op2 = vitalOptions[(seed + 1) % 4];
+
+      const thresholds = {
+        bp: 120 + (seed * 5) % 40,
+        chol: 200 + (seed * 7) % 50,
+        hr: 70 + (seed * 3) % 25,
+        bs: 90 + (seed * 4) % 30,
+      };
+
+      const getVital = (op: string) => {
+        if (op === 'bp') return bpSys;
+        if (op === 'chol') return chol;
+        if (op === 'hr') return hr;
+        return bs;
+      };
+      
+      const getConditionString = (op: string) => {
+        if (op === 'bp') return `BP > ${thresholds.bp}?`;
+        if (op === 'chol') return `Chol > ${thresholds.chol}?`;
+        if (op === 'hr') return `HR > ${thresholds.hr}?`;
+        return `BS > ${thresholds.bs}?`;
+      }
+      
+      const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
+
+
+      currentPath.push('root');
+      if (getVital(op1) > thresholds[op1 as keyof typeof thresholds]) {
+        currentPath.push(`${op1}>`);
+        if (getVital(op2) > thresholds[op2 as keyof typeof thresholds]) {
+          currentPath.push(`${op1}>_${op2}>`);
         } else {
-          currentPath.push('bp<=140');
-          if (hr > 90) {
-            currentPath.push('bp<=140_hr>90');
-          } else {
-            currentPath.push('bp<=140_hr<=90');
-          }
-        }
-      } else if (treeId === 2) {
-        currentPath.push('root');
-        if (chol > 220) {
-          currentPath.push('chol>220');
-          if (bs > 125) {
-            currentPath.push('chol>220_bs>125');
-          } else {
-            currentPath.push('chol>220_bs<=125');
-          }
-        } else {
-          currentPath.push('chol<=220');
-          if (bpSys > 130) {
-            currentPath.push('chol<=220_bp>130');
-          } else {
-            currentPath.push('chol<=220_bp<=130');
-          }
+          currentPath.push(`${op1}>_${op2}<=`);
         }
       } else {
-        currentPath.push('root');
-        if (hr > 85) {
-          currentPath.push('hr>85');
-          if (bs > 110) {
-            currentPath.push('hr>85_bs>110');
-          } else {
-            currentPath.push('hr>85_bs<=110');
-          }
+        currentPath.push(`${op1}<=`);
+        if (getVital(op2) > thresholds[op2 as keyof typeof thresholds]) {
+          currentPath.push(`${op1}<=_${op2}>`);
         } else {
-          currentPath.push('hr<=85');
-          if (chol > 200) {
-            currentPath.push('hr<=85_chol>200');
-          } else {
-            currentPath.push('hr<=85_chol<=200');
-          }
+          currentPath.push(`${op1}<=_${op2}<=`);
         }
       }
+
       setPaths(currentPath);
     } else if (!isActive) {
       setPaths([]);
@@ -155,147 +154,71 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
 
   const isPath = (id: string) => isActive && paths.includes(id);
 
-  if (treeId === 1) {
-    return (
-      <TreeNode condition="Blood Pressure > 140?" isPath={isPath('root')}>
-        <div className="flex flex-col items-center">
-          <span className="text-xs mb-1">Yes</span>
-          <TreeNode condition="Cholesterol > 240?" isPath={isPath('bp>140')}>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">Yes</span>
-              <TreeNode
-                isLeaf
-                result="Risky"
-                isPath={isPath('bp>140_chol>240')}
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">No</span>
-              <TreeNode
-                isLeaf
-                result="Risky"
-                isPath={isPath('bp>140_chol<=240')}
-              />
-            </div>
-          </TreeNode>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xs mb-1">No</span>
-          <TreeNode condition="Heart Rate > 90?" isPath={isPath('bp<=140')}>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">Yes</span>
-              <TreeNode
-                isLeaf
-                result="Risky"
-                isPath={isPath('bp<=140_hr>90')}
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">No</span>
-              <TreeNode
-                isLeaf
-                result="Not Risky"
-                isPath={isPath('bp<=140_hr<=90')}
-              />
-            </div>
-          </TreeNode>
-        </div>
-      </TreeNode>
-    );
-  }
+  // Generic tree structure generation
+  const seed = treeId;
+  const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
+  const vitalNames: {[key: string]: string} = { bp: 'Blood Pressure', chol: 'Cholesterol', hr: 'Heart Rate', bs: 'Blood Sugar' };
 
-  if (treeId === 2) {
-    return (
-      <TreeNode condition="Cholesterol > 220?" isPath={isPath('root')}>
-        <div className="flex flex-col items-center">
-          <span className="text-xs mb-1">Yes</span>
-          <TreeNode condition="Blood Sugar > 125?" isPath={isPath('chol>220')}>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">Yes</span>
-              <TreeNode
-                isLeaf
-                result="Risky"
-                isPath={isPath('chol>220_bs>125')}
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">No</span>
-              <TreeNode
-                isLeaf
-                result="Not Risky"
-                isPath={isPath('chol>220_bs<=125')}
-              />
-            </div>
-          </TreeNode>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xs mb-1">No</span>
-          <TreeNode
-            condition="Blood Pressure > 130?"
-            isPath={isPath('chol<=220')}
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">Yes</span>
-              <TreeNode
-                isLeaf
-                result="Risky"
-                isPath={isPath('chol<=220_bp>130')}
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xs mb-1">No</span>
-              <TreeNode
-                isLeaf
-                result="Not Risky"
-                isPath={isPath('chol<=220_bp<=130')}
-              />
-            </div>
-          </TreeNode>
-        </div>
-      </TreeNode>
-    );
-  }
+  const op1 = vitalOptions[seed % 4];
+  const op2 = vitalOptions[(seed + 1) % 4];
+  const op3 = vitalOptions[(seed + 2) % 4];
+
+
+  const thresholds = {
+    bp: 120 + (seed * 5) % 40,
+    chol: 200 + (seed * 7) % 50,
+    hr: 70 + (seed * 3) % 25,
+    bs: 90 + (seed * 4) % 30,
+  };
+  
+  const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
 
   return (
-    <TreeNode condition="Heart Rate > 85?" isPath={isPath('root')}>
+    <TreeNode condition={`${vitalNames[op1]} > ${thresholds[op1 as keyof typeof thresholds]}?`} isPath={isPath('root')}>
       <div className="flex flex-col items-center">
-        <span className="text-xs mb-1">Yes</span>
-        <TreeNode condition="Blood Sugar > 110?" isPath={isPath('hr>85')}>
+        <span className="text-xs mb-1 absolute -top-4">Yes</span>
+        <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+        <TreeNode condition={`${vitalNames[op2]} > ${thresholds[op2 as keyof typeof thresholds]}?`} isPath={isPath(`${op1}>`)}>
           <div className="flex flex-col items-center">
-            <span className="text-xs mb-1">Yes</span>
+            <span className="text-xs mb-1 absolute -top-4">Yes</span>
+            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
             <TreeNode
               isLeaf
-              result="Risky"
-              isPath={isPath('hr>85_bs>110')}
+              result={getResult(seed + 1)}
+              isPath={isPath(`${op1}>_${op2}>`)}
             />
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-xs mb-1">No</span>
+            <span className="text-xs mb-1 absolute -top-4">No</span>
+            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
             <TreeNode
               isLeaf
-              result="Not Risky"
-              isPath={isPath('hr>85_bs<=110')}
+              result={getResult(seed + 2)}
+              isPath={isPath(`${op1}>_${op2}<=`)}
             />
           </div>
         </TreeNode>
       </div>
       <div className="flex flex-col items-center">
-        <span className="text-xs mb-1">No</span>
-        <TreeNode condition="Cholesterol > 200?" isPath={isPath('hr<=85')}>
+        <span className="text-xs mb-1 absolute -top-4">No</span>
+        <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+        <TreeNode condition={`${vitalNames[op3]} > ${thresholds[op3 as keyof typeof thresholds]}?`} isPath={isPath(`${op1}<=`)}>
           <div className="flex flex-col items-center">
-            <span className="text-xs mb-1">Yes</span>
+            <span className="text-xs mb-1 absolute -top-4">Yes</span>
+            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
             <TreeNode
               isLeaf
-              result="Risky"
-              isPath={isPath('hr<=85_chol>200')}
+              result={getResult(seed + 3)}
+              isPath={isPath(`${op1}<=_${op3}>`)}
             />
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-xs mb-1">No</span>
+            <span className="text-xs mb-1 absolute -top-4">No</span>
+            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
             <TreeNode
               isLeaf
-              result="Not Risky"
-              isPath={isPath('hr<=85_chol<=200')}
+              result={getResult(seed + 4)}
+              isPath={isPath(`${op1}<=_${op3}<=`)}
             />
           </div>
         </TreeNode>
@@ -303,6 +226,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
     </TreeNode>
   );
 };
+
 
 export default function PredictPage() {
   const [vitals, setVitals] = React.useState<Vitals>({
@@ -321,6 +245,7 @@ export default function PredictPage() {
   const [treeResults, setTreeResults] = React.useState<
     ('Risky' | 'Not Risky')[]
   >([]);
+  const [numTrees, setNumTrees] = useState(3);
 
   useEffect(() => {
     setIsMounted(true);
@@ -349,27 +274,51 @@ export default function PredictPage() {
         const hr = parseInt(heartRate);
         const bs = parseInt(bloodSugar);
 
-        // Tree 1 logic
-        if (bpSys > 140) results.push('Risky');
-        else if (hr > 90) results.push('Risky');
-        else results.push('Not Risky');
+        for (let i = 1; i <= numTrees; i++) {
+          const seed = i;
+          const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
+          const op1 = vitalOptions[seed % 4];
+          const op2 = vitalOptions[(seed + 1) % 4];
+          const op3 = vitalOptions[(seed + 2) % 4];
 
-        // Tree 2 logic
-        if (chol > 220 && bs > 125) results.push('Risky');
-        else if (chol <= 220 && bpSys > 130) results.push('Risky');
-        else if (chol > 220 && bs <= 125) results.push('Not Risky');
-        else results.push('Not Risky');
 
-        // Tree 3 logic
-        if (hr > 85 && bs > 110) results.push('Risky');
-        else if (hr <= 85 && chol > 200) results.push('Risky');
-        else if (hr > 85 && bs <= 110) results.push('Not Risky');
-        else results.push('Not Risky');
+          const thresholds = {
+            bp: 120 + (seed * 5) % 40,
+            chol: 200 + (seed * 7) % 50,
+            hr: 70 + (seed * 3) % 25,
+            bs: 90 + (seed * 4) % 30,
+          };
+          
+          const getVital = (op: string) => {
+            if (op === 'bp') return bpSys;
+            if (op === 'chol') return chol;
+            if (op === 'hr') return hr;
+            return bs;
+          };
+          
+          const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
+
+          let result: 'Risky' | 'Not Risky';
+          if (getVital(op1) > thresholds[op1 as keyof typeof thresholds]) {
+            if (getVital(op2) > thresholds[op2 as keyof typeof thresholds]) {
+              result = getResult(seed + 1);
+            } else {
+              result = getResult(seed + 2);
+            }
+          } else {
+            if (getVital(op3) > thresholds[op3 as keyof typeof thresholds]) {
+              result = getResult(seed + 3);
+            } else {
+              result = getResult(seed + 4);
+            }
+          }
+          results.push(result);
+        }
 
         setTreeResults(results);
 
         const riskyCount = results.filter((r) => r === 'Risky').length;
-        const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
+        const finalPrediction = riskyCount >= (numTrees / 2) ? 'Risky' : 'Not Risky';
 
         setPrediction(finalPrediction);
         setIsPredicting(false);
@@ -377,7 +326,7 @@ export default function PredictPage() {
 
       return () => clearTimeout(timeoutId);
     }
-  }, [isPredicting, vitalsForPrediction]);
+  }, [isPredicting, vitalsForPrediction, numTrees]);
 
   const reset = () => {
     setPrediction(null);
@@ -536,6 +485,25 @@ export default function PredictPage() {
               </div>
             </div>
           </TooltipProvider>
+
+          <div className="mt-8 space-y-4 max-w-sm mx-auto">
+            <div className="grid gap-2 text-center">
+              <Label htmlFor="num-trees">Number of Decision Trees: {numTrees}</Label>
+              <Slider
+                id="num-trees"
+                min={3}
+                max={30}
+                step={1}
+                value={[numTrees]}
+                onValueChange={(value) => {
+                  setNumTrees(value[0]);
+                  reset();
+                }}
+                disabled={isPredicting}
+              />
+            </div>
+          </div>
+
           <div className="flex justify-center mt-8">
             <Button
               size="lg"
@@ -564,17 +532,17 @@ export default function PredictPage() {
                 isPredicting || prediction ? 'opacity-100' : 'opacity-0'
               )}
             >
-              {[1, 2, 3].map((treeId) => (
-                <Card key={treeId}>
+              {[...Array(numTrees)].map((_, i) => (
+                <Card key={i}>
                   <CardHeader>
                     <CardTitle className="text-center text-lg">
-                      Tree {treeId}
+                      Tree {i + 1}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="flex justify-center p-4">
+                  <CardContent className="flex justify-center p-4 min-h-[150px]">
                     <DecisionTree
                       vitals={vitalsForPrediction}
-                      treeId={treeId}
+                      treeId={i + 1}
                       isActive={!!vitalsForPrediction}
                     />
                   </CardContent>
@@ -584,12 +552,12 @@ export default function PredictPage() {
                       <span
                         className={cn('font-bold ml-1', {
                           'text-destructive':
-                            treeResults[treeId - 1] === 'Risky',
+                            treeResults[i] === 'Risky',
                           'text-green-500':
-                            treeResults[treeId - 1] === 'Not Risky',
+                            treeResults[i] === 'Not Risky',
                         })}
                       >
-                        {treeResults[treeId - 1]}
+                        {treeResults[i] || '...'}
                       </span>
                     </CardFooter>
                   )}
@@ -607,11 +575,11 @@ export default function PredictPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-6">
-                    <div className="flex items-center space-x-8">
+                    <div className="flex items-center space-x-2 md:space-x-8 overflow-x-auto p-4 max-w-full">
                       {treeResults.map((result, index) => (
                         <div
                           key={index}
-                          className="flex flex-col items-center space-y-2"
+                          className="flex flex-col items-center space-y-2 flex-shrink-0"
                         >
                           <div
                             className={cn(
