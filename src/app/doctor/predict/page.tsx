@@ -89,6 +89,11 @@ type DecisionTreeProps = {
 
 const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
   const [paths, setPaths] = React.useState<string[]>([]);
+  const seed = treeId;
+  const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
+  const op1 = vitalOptions[seed % 4];
+  const op2 = vitalOptions[(seed + 1) % 4];
+  const op3 = vitalOptions[(seed + 2) % 4];
 
   React.useEffect(() => {
     if (isActive && vitals) {
@@ -98,12 +103,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
       const hr = parseInt(heartRate);
       const bs = parseInt(bloodSugar);
       let currentPath: string[] = [];
-
-      // Pseudo-random logic based on treeId
-      const seed = treeId;
-      const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
-      const op1 = vitalOptions[seed % 4];
-      const op2 = vitalOptions[(seed + 1) % 4];
 
       const thresholds = {
         bp: 120 + (seed * 5) % 40,
@@ -118,16 +117,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
         if (op === 'hr') return hr;
         return bs;
       };
-      
-      const getConditionString = (op: string) => {
-        if (op === 'bp') return `BP > ${thresholds.bp}?`;
-        if (op === 'chol') return `Chol > ${thresholds.chol}?`;
-        if (op === 'hr') return `HR > ${thresholds.hr}?`;
-        return `BS > ${thresholds.bs}?`;
-      }
-      
-      const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
-
 
       currentPath.push('root');
       if (getVital(op1) > thresholds[op1 as keyof typeof thresholds]) {
@@ -139,10 +128,10 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
         }
       } else {
         currentPath.push(`${op1}<=`);
-        if (getVital(op2) > thresholds[op2 as keyof typeof thresholds]) {
-          currentPath.push(`${op1}<=_${op2}>`);
+        if (getVital(op3) > thresholds[op3 as keyof typeof thresholds]) {
+          currentPath.push(`${op1}<=_${op3}>`);
         } else {
-          currentPath.push(`${op1}<=_${op2}<=`);
+          currentPath.push(`${op1}<=_${op3}<=`);
         }
       }
 
@@ -150,19 +139,17 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
     } else if (!isActive) {
       setPaths([]);
     }
-  }, [isActive, vitals, treeId]);
+  }, [isActive, vitals, treeId, op1, op2, op3, seed]);
 
   const isPath = (id: string) => isActive && paths.includes(id);
 
   // Generic tree structure generation
-  const seed = treeId;
-  const vitalOptions = ['bp', 'chol', 'hr', 'bs'];
-  const vitalNames: {[key: string]: string} = { bp: 'Blood Pressure', chol: 'Cholesterol', hr: 'Heart Rate', bs: 'Blood Sugar' };
-
-  const op1 = vitalOptions[seed % 4];
-  const op2 = vitalOptions[(seed + 1) % 4];
-  const op3 = vitalOptions[(seed + 2) % 4];
-
+  const vitalNames: { [key: string]: string } = {
+    bp: 'Blood Pressure',
+    chol: 'Cholesterol',
+    hr: 'Heart Rate',
+    bs: 'Blood Sugar',
+  };
 
   const thresholds = {
     bp: 120 + (seed * 5) % 40,
@@ -170,18 +157,29 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
     hr: 70 + (seed * 3) % 25,
     bs: 90 + (seed * 4) % 30,
   };
-  
-  const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
+
+  const getResult = (pathSeed: number) =>
+    pathSeed % 3 === 0 ? 'Not Risky' : 'Risky';
 
   return (
-    <TreeNode condition={`${vitalNames[op1]} > ${thresholds[op1 as keyof typeof thresholds]}?`} isPath={isPath('root')}>
+    <TreeNode
+      condition={`${vitalNames[op1]} > ${
+        thresholds[op1 as keyof typeof thresholds]
+      }?`}
+      isPath={isPath('root')}
+    >
       <div className="flex flex-col items-center">
         <span className="text-xs mb-1 absolute -top-4">Yes</span>
-        <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
-        <TreeNode condition={`${vitalNames[op2]} > ${thresholds[op2 as keyof typeof thresholds]}?`} isPath={isPath(`${op1}>`)}>
+
+        <TreeNode
+          condition={`${vitalNames[op2]} > ${
+            thresholds[op2 as keyof typeof thresholds]
+          }?`}
+          isPath={isPath(`${op1}>`)}
+        >
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1 absolute -top-4">Yes</span>
-            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+
             <TreeNode
               isLeaf
               result={getResult(seed + 1)}
@@ -190,7 +188,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           </div>
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1 absolute -top-4">No</span>
-            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+
             <TreeNode
               isLeaf
               result={getResult(seed + 2)}
@@ -201,11 +199,16 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
       </div>
       <div className="flex flex-col items-center">
         <span className="text-xs mb-1 absolute -top-4">No</span>
-        <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
-        <TreeNode condition={`${vitalNames[op3]} > ${thresholds[op3 as keyof typeof thresholds]}?`} isPath={isPath(`${op1}<=`)}>
+
+        <TreeNode
+          condition={`${vitalNames[op3]} > ${
+            thresholds[op3 as keyof typeof thresholds]
+          }?`}
+          isPath={isPath(`${op1}<=`)}
+        >
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1 absolute -top-4">Yes</span>
-            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+
             <TreeNode
               isLeaf
               result={getResult(seed + 3)}
@@ -214,7 +217,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           </div>
           <div className="flex flex-col items-center">
             <span className="text-xs mb-1 absolute -top-4">No</span>
-            <div className="absolute top-0 w-px h-2 bg-foreground/20"></div>
+
             <TreeNode
               isLeaf
               result={getResult(seed + 4)}
@@ -226,7 +229,6 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
     </TreeNode>
   );
 };
-
 
 export default function PredictPage() {
   const [vitals, setVitals] = React.useState<Vitals>({
@@ -253,9 +255,7 @@ export default function PredictPage() {
 
   const handleInputChange = (field: keyof Vitals, value: string) => {
     setVitals((prev) => ({ ...prev, [field]: value }));
-    if (prediction) {
-      reset();
-    }
+    reset();
   };
 
   const handlePredict = () => {
@@ -281,22 +281,22 @@ export default function PredictPage() {
           const op2 = vitalOptions[(seed + 1) % 4];
           const op3 = vitalOptions[(seed + 2) % 4];
 
-
           const thresholds = {
             bp: 120 + (seed * 5) % 40,
             chol: 200 + (seed * 7) % 50,
             hr: 70 + (seed * 3) % 25,
             bs: 90 + (seed * 4) % 30,
           };
-          
+
           const getVital = (op: string) => {
             if (op === 'bp') return bpSys;
             if (op === 'chol') return chol;
             if (op === 'hr') return hr;
             return bs;
           };
-          
-          const getResult = (pathSeed: number) => (pathSeed % 3 === 0) ? "Not Risky" : "Risky";
+
+          const getResult = (pathSeed: number) =>
+            pathSeed % 3 === 0 ? 'Not Risky' : 'Risky';
 
           let result: 'Risky' | 'Not Risky';
           if (getVital(op1) > thresholds[op1 as keyof typeof thresholds]) {
@@ -318,7 +318,8 @@ export default function PredictPage() {
         setTreeResults(results);
 
         const riskyCount = results.filter((r) => r === 'Risky').length;
-        const finalPrediction = riskyCount >= (numTrees / 2) ? 'Risky' : 'Not Risky';
+        const finalPrediction =
+          riskyCount >= numTrees / 2 ? 'Risky' : 'Not Risky';
 
         setPrediction(finalPrediction);
         setIsPredicting(false);
@@ -343,6 +344,11 @@ export default function PredictPage() {
   if (!isMounted) {
     return null;
   }
+
+  const riskyVotes = prediction
+    ? treeResults.filter((r) => r === 'Risky').length
+    : 0;
+  const notRiskyVotes = prediction ? treeResults.length - riskyVotes : 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -388,7 +394,9 @@ export default function PredictPage() {
                         <Info className="w-4 h-4 text-muted-foreground" />
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>The pressure of circulating blood on the artery walls.</p>
+                        <p>
+                          The pressure of circulating blood on the artery walls.
+                        </p>
                       </TooltipContent>
                     </Tooltip>
                   </CardHeader>
@@ -409,7 +417,7 @@ export default function PredictPage() {
                 <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                   <CardHeader className="p-3 flex-row items-center justify-between">
                     <CardTitle className="text-base">Cholesterol</CardTitle>
-                     <Tooltip>
+                    <Tooltip>
                       <TooltipTrigger>
                         <Info className="w-4 h-4 text-muted-foreground" />
                       </TooltipTrigger>
@@ -435,7 +443,7 @@ export default function PredictPage() {
                 <Card className="w-36 shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl">
                   <CardHeader className="p-3 flex-row items-center justify-between">
                     <CardTitle className="text-base">Heart Rate</CardTitle>
-                     <Tooltip>
+                    <Tooltip>
                       <TooltipTrigger>
                         <Info className="w-4 h-4 text-muted-foreground" />
                       </TooltipTrigger>
@@ -488,7 +496,9 @@ export default function PredictPage() {
 
           <div className="mt-8 space-y-4 max-w-sm mx-auto">
             <div className="grid gap-2 text-center">
-              <Label htmlFor="num-trees">Number of Decision Trees: {numTrees}</Label>
+              <Label htmlFor="num-trees">
+                Number of Decision Trees: {numTrees}
+              </Label>
               <Slider
                 id="num-trees"
                 min={3}
@@ -514,8 +524,8 @@ export default function PredictPage() {
               {isPredicting
                 ? 'Analyzing...'
                 : prediction
-                  ? 'Run New Prediction'
-                  : 'Predict'}
+                ? 'Run New Prediction'
+                : 'Predict'}
             </Button>
           </div>
         </div>
@@ -551,10 +561,8 @@ export default function PredictPage() {
                       Prediction:{' '}
                       <span
                         className={cn('font-bold ml-1', {
-                          'text-destructive':
-                            treeResults[i] === 'Risky',
-                          'text-green-500':
-                            treeResults[i] === 'Not Risky',
+                          'text-destructive': treeResults[i] === 'Risky',
+                          'text-green-500': treeResults[i] === 'Not Risky',
                         })}
                       >
                         {treeResults[i] || '...'}
@@ -613,6 +621,16 @@ export default function PredictPage() {
                     <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
 
                     <div className="flex flex-col items-center space-y-2">
+                      <div className='flex gap-4 items-center mb-4'>
+                          <div className='text-center'>
+                              <p className='font-bold text-lg text-destructive'>{riskyVotes}</p>
+                              <p className='text-sm text-muted-foreground'>Risky Votes</p>
+                          </div>
+                           <div className='text-center'>
+                              <p className='font-bold text-lg text-green-500'>{notRiskyVotes}</p>
+                              <p className='text-sm text-muted-foreground'>Not Risky Votes</p>
+                          </div>
+                      </div>
                       <div
                         className={cn(
                           'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
