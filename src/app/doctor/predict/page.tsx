@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -77,9 +77,9 @@ type DecisionTreeProps = {
 };
 
 const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
-  const [paths, setPaths] = useState<string[]>([]);
+  const [paths, setPaths] = React.useState<string[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isActive && vitals) {
       const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
       const bpSys = parseInt(bloodPressure);
@@ -140,9 +140,7 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
           }
         }
       }
-      
-      const timeout = setTimeout(() => setPaths(currentPath), 1000);
-      return () => clearTimeout(timeout);
+      setPaths(currentPath);
     } else if (!isActive) {
       setPaths([]);
     }
@@ -300,23 +298,24 @@ const DecisionTree = ({ vitals, treeId, isActive }: DecisionTreeProps) => {
 };
 
 export default function PredictPage() {
-  const [vitals, setVitals] = useState<Vitals>({
+  const [vitals, setVitals] = React.useState<Vitals>({
     bloodPressure: '120',
     cholesterol: '200',
     heartRate: '75',
     bloodSugar: '99',
   });
-  const [vitalsForPrediction, setVitalsForPrediction] = useState<Vitals | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  const [isPredicting, setIsPredicting] = useState(false);
-  const [prediction, setPrediction] = useState<'Risky' | 'Not Risky' | null>(
-    null
-  );
-  const [treeResults, setTreeResults] = useState<
+  const [vitalsForPrediction, setVitalsForPrediction] =
+    React.useState<Vitals | null>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+  const [isPredicting, setIsPredicting] = React.useState(false);
+  const [prediction, setPrediction] = React.useState<
+    'Risky' | 'Not Risky' | null
+  >(null);
+  const [treeResults, setTreeResults] = React.useState<
     ('Risky' | 'Not Risky')[]
   >([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsMounted(true);
   }, []);
 
@@ -329,44 +328,49 @@ export default function PredictPage() {
 
   const handlePredict = () => {
     setIsPredicting(true);
-    setPrediction(null);
-    setTreeResults([]);
     setVitalsForPrediction(vitals);
-
-    setTimeout(() => {
-      const results: ('Risky' | 'Not Risky')[] = [];
-      const { bloodPressure, cholesterol, heartRate, bloodSugar } = vitals;
-      const bpSys = parseInt(bloodPressure);
-      const chol = parseInt(cholesterol);
-      const hr = parseInt(heartRate);
-      const bs = parseInt(bloodSugar);
-
-      // Tree 1 logic
-      if (bpSys > 140) results.push('Risky');
-      else if (hr > 90) results.push('Risky');
-      else results.push('Not Risky');
-
-      // Tree 2 logic
-      if (chol > 220 && bs > 125) results.push('Risky');
-      else if (chol <= 220 && bpSys > 130) results.push('Risky');
-      else if (chol > 220 && bs <= 125) results.push('Not Risky');
-      else results.push('Not Risky');
-
-      // Tree 3 logic
-      if (hr > 85 && bs > 110) results.push('Risky');
-      else if (hr <= 85 && chol > 200) results.push('Risky');
-      else if (hr > 85 && bs <= 110) results.push('Not Risky');
-      else results.push('Not Risky');
-
-      setTreeResults(results);
-
-      const riskyCount = results.filter((r) => r === 'Risky').length;
-      const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
-
-      setPrediction(finalPrediction);
-      setIsPredicting(false);
-    }, 4000); // Wait for animations to play
   };
+
+  React.useEffect(() => {
+    if (isPredicting && vitalsForPrediction) {
+      const timeoutId = setTimeout(() => {
+        const results: ('Risky' | 'Not Risky')[] = [];
+        const { bloodPressure, cholesterol, heartRate, bloodSugar } =
+          vitalsForPrediction;
+        const bpSys = parseInt(bloodPressure);
+        const chol = parseInt(cholesterol);
+        const hr = parseInt(heartRate);
+        const bs = parseInt(bloodSugar);
+
+        // Tree 1 logic
+        if (bpSys > 140) results.push('Risky');
+        else if (hr > 90) results.push('Risky');
+        else results.push('Not Risky');
+
+        // Tree 2 logic
+        if (chol > 220 && bs > 125) results.push('Risky');
+        else if (chol <= 220 && bpSys > 130) results.push('Risky');
+        else if (chol > 220 && bs <= 125) results.push('Not Risky');
+        else results.push('Not Risky');
+
+        // Tree 3 logic
+        if (hr > 85 && bs > 110) results.push('Risky');
+        else if (hr <= 85 && chol > 200) results.push('Risky');
+        else if (hr > 85 && bs <= 110) results.push('Not Risky');
+        else results.push('Not Risky');
+
+        setTreeResults(results);
+
+        const riskyCount = results.filter((r) => r === 'Risky').length;
+        const finalPrediction = riskyCount >= 2 ? 'Risky' : 'Not Risky';
+
+        setPrediction(finalPrediction);
+        setIsPredicting(false);
+      }, 1500); // Wait for animations to play
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isPredicting, vitalsForPrediction]);
 
   const reset = () => {
     setPrediction(null);
@@ -498,7 +502,11 @@ export default function PredictPage() {
               disabled={!allFieldsFilled || isPredicting}
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              {isPredicting ? 'Analyzing...' : (prediction ? 'Run New Prediction' : 'Predict')}
+              {isPredicting
+                ? 'Analyzing...'
+                : prediction
+                  ? 'Run New Prediction'
+                  : 'Predict'}
             </Button>
           </div>
         </div>
@@ -506,15 +514,13 @@ export default function PredictPage() {
         {(isPredicting || prediction) && (
           <div className="flex flex-col items-center w-full mt-8">
             <h2 className="text-2xl font-bold mb-4">
-              {prediction
-                ? 'Prediction Details'
-                : 'Analyzing Patient Data...'}
+              {prediction ? 'Prediction Details' : 'Analyzing Patient Data...'}
             </h2>
-            
+
             <div
               className={cn(
                 'grid grid-cols-1 lg:grid-cols-3 gap-4 w-full transition-opacity duration-1000',
-                (isPredicting || prediction) ? 'opacity-100' : 'opacity-0'
+                isPredicting || prediction ? 'opacity-100' : 'opacity-0'
               )}
             >
               {[1, 2, 3].map((treeId) => (
@@ -528,15 +534,16 @@ export default function PredictPage() {
                     <DecisionTree
                       vitals={vitalsForPrediction}
                       treeId={treeId}
-                      isActive={isPredicting || !!prediction}
+                      isActive={!!vitalsForPrediction}
                     />
                   </CardContent>
-                  {treeResults.length > 0 && (
+                  {prediction && treeResults.length > 0 && (
                     <CardFooter className="flex justify-center text-sm font-medium">
                       Prediction:{' '}
                       <span
                         className={cn('font-bold ml-1', {
-                          'text-destructive': treeResults[treeId - 1] === 'Risky',
+                          'text-destructive':
+                            treeResults[treeId - 1] === 'Risky',
                           'text-green-500':
                             treeResults[treeId - 1] === 'Not Risky',
                         })}
@@ -582,7 +589,7 @@ export default function PredictPage() {
                           <span className="text-sm font-medium text-muted-foreground">
                             Tree {index + 1}
                           </span>
-                           <span
+                          <span
                             className={cn('font-bold ml-1 text-sm', {
                               'text-destructive': result === 'Risky',
                               'text-green-500': result === 'Not Risky',
@@ -652,10 +659,9 @@ export default function PredictPage() {
                       <div className="p-3 rounded-full bg-primary/10">
                         <BarChart className="w-8 h-8 text-primary" />
                       </div>
-                      <h3 className="font-semibold">Reduces Bias</h3>
+                      <h3 className="font-semibold">Reduces Errors</h3>
                       <p className="text-sm text-muted-foreground">
-                        Averaging many trees cancels out individual errors and
-                        biases.
+                        Averaging many trees cancels out individual errors.
                       </p>
                     </div>
                     <div className="flex flex-col items-center space-y-2">
