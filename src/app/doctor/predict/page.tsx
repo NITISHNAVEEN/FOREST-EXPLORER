@@ -322,6 +322,9 @@ export default function PredictPage() {
 
   const handleInputChange = (field: keyof Vitals, value: string) => {
     setVitals((prev) => ({ ...prev, [field]: value }));
+    if (prediction) {
+      reset();
+    }
   };
 
   const handlePredict = () => {
@@ -489,20 +492,14 @@ export default function PredictPage() {
             </div>
           </div>
           <div className="flex justify-center mt-8">
-            {prediction ? (
-              <Button size="lg" onClick={reset}>
-                Run New Prediction
-              </Button>
-            ) : (
-              <Button
-                size="lg"
-                onClick={handlePredict}
-                disabled={!allFieldsFilled || isPredicting}
-              >
-                <Sparkles className="w-5 h-5 mr-2" />
-                {isPredicting ? 'Analyzing...' : 'Predict'}
-              </Button>
-            )}
+            <Button
+              size="lg"
+              onClick={handlePredict}
+              disabled={!allFieldsFilled || isPredicting}
+            >
+              <Sparkles className="w-5 h-5 mr-2" />
+              {isPredicting ? 'Analyzing...' : (prediction ? 'Run New Prediction' : 'Predict')}
+            </Button>
           </div>
         </div>
 
