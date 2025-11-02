@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ArrowLeft, HeartPulse, BrainCircuit } from 'lucide-react';
+import { ArrowLeft, HeartPulse, BrainCircuit, Database } from 'lucide-react';
 
 export default function DoctorPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -46,7 +46,7 @@ export default function DoctorPage() {
           </div>
 
           <div
-            className={`transition-all duration-1000 ease-out delay-500 ${
+            className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-1000 ease-out delay-500 ${
               isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -56,24 +56,49 @@ export default function DoctorPage() {
                   <BrainCircuit className="w-8 h-8 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl">
-                    Introducing Random Forest for your aid, Doctor.
+                  <CardTitle className="text-xl">
+                    Random Forest for Your Aid
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
-                  Just fill in some inputs to predict whether your patient is
-                  prone to a heart attack or not, without worrying about how
-                  symptoms would impact the risk. The Random Forest algorithm
-                  can solve your problem by using various decision trees which
-                  gives you the best result.
+                  Use our AI-powered tool to predict heart attack risk based on
+                  patient vitals, leveraging the power of multiple decision
+                  trees.
                 </CardDescription>
                 <div className="flex justify-end mt-6">
                   <Link href="/doctor/predict">
                     <Button>
                       <HeartPulse className="w-4 h-4 mr-2" />
                       Predict Now
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <Database className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">
+                    View Synthetic Dataset
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">
+                  Explore the synthetic patient data that our Random Forest
+                  model uses to make predictions.
+                </CardDescription>
+                <div className="flex justify-end mt-6">
+                  <Link href="/doctor/dataset">
+                    <Button variant="outline">
+                      <Database className="w-4 h-4 mr-2" />
+                      View Dataset
                     </Button>
                   </Link>
                 </div>
