@@ -24,6 +24,7 @@ import {
 import { Button } from '@/components/ui/button';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 export default function Home() {
   const roles = [
@@ -131,7 +132,10 @@ export default function Home() {
                   width={role.image.width}
                   height={role.image.height}
                   data-ai-hint={role.image['data-ai-hint']}
-                  className="object-cover object-center w-full h-full"
+                  className={cn(
+                    'object-cover object-center w-full h-full',
+                    role.name === 'Sports Coach' && 'object-contain'
+                  )}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-6 text-primary-foreground">
