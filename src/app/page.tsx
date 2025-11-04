@@ -138,9 +138,6 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-6 text-primary-foreground">
-                  <div className="p-2 bg-primary/80 rounded-full mb-2 w-fit">
-                    {role.icon}
-                  </div>
                   <CardTitle className="text-2xl font-bold">
                     {role.name}
                   </CardTitle>
