@@ -18,7 +18,7 @@ import {
   Sparkles,
   HeartCrack,
   HeartPulse,
-  ArrowRight,
+  ArrowDown,
   Vote,
   Users,
   ShieldCheck,
@@ -411,7 +411,7 @@ export default function PredictPage() {
             </p>
           </div>
           <TooltipProvider>
-            <Card className="bg-blue-50/20 dark:bg-blue-900/10 border-blue-200/50 shadow-sm">
+            <Card className="bg-yellow-50/20 dark:bg-yellow-900/10 border-yellow-200/50 shadow-sm">
               <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
                 <div className="w-full h-full rounded-lg overflow-hidden flex items-center justify-center">
                   <Image
@@ -593,7 +593,7 @@ export default function PredictPage() {
                       ))}
                     </div>
 
-                    <ArrowRight className="w-12 h-12 text-muted-foreground rotate-90" />
+                    <ArrowDown className="w-12 h-12 text-muted-foreground" />
 
                     <div className="flex flex-col items-center space-y-2">
                       <div className="flex gap-4 items-center mb-4">
@@ -616,17 +616,13 @@ export default function PredictPage() {
                       </div>
                       <div
                         className={cn(
-                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
+                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-xl text-center p-2',
                           prediction === 'Risky'
                             ? 'bg-destructive'
                             : 'bg-green-500'
                         )}
                       >
-                        {prediction === 'Risky' ? (
-                          <HeartCrack className="w-12 h-12" />
-                        ) : (
-                          <HeartPulse className="w-12 h-12" />
-                        )}
+                        {prediction}
                       </div>
                       <span className="text-lg font-semibold">
                         Final Result:{' '}

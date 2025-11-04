@@ -142,7 +142,7 @@ const DecisionTree = ({ conditions, treeId, isActive }: DecisionTreeProps) => {
 
   const getConditionString = (op: string) => {
     const seedValue = (seed + op.length) % 3;
-    if (op === 'outlook') return `Outlook is ${['Sunny', 'Overcast', 'Rainy'][seedValue]}?`;
+    if (op === 'outlook') return `Sky Condition is ${['Sunny', 'Overcast', 'Rainy'][seedValue]}?`;
     if (op === 'humidity') return 'Humidity is High?';
     if (op === 'wind') return 'Wind is Strong?';
     if (op === 'temp') return `Temp is ${['Hot', 'Mild', 'Cool'][seedValue]}?`;
@@ -285,7 +285,7 @@ export default function PredictPage() {
     {
       id: 'outlook',
       field: 'outlook',
-      label: 'Outlook',
+      label: 'Sky Condition',
       icon: Sun,
       tooltip: 'The general Sky Condition.',
       options: ['sunny', 'overcast', 'rainy'],
@@ -328,7 +328,7 @@ export default function PredictPage() {
             </p>
           </div>
           <TooltipProvider>
-            <Card className="bg-green-50/20 dark:bg-green-900/10 border-green-200/50 shadow-sm">
+            <Card className="bg-yellow-50/20 dark:bg-yellow-900/10 border-yellow-200/50 shadow-sm">
               <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
                 <div className="w-full h-full rounded-lg overflow-hidden flex items-center justify-center">
                   <Image
@@ -469,8 +469,8 @@ export default function PredictPage() {
                         <div key={index} className="flex flex-col items-center space-y-2 flex-shrink-0">
                           <div
                             className={cn(
-                              'w-16 h-16 rounded-full flex items-center justify-center text-center text-white font-bold text-sm shadow-lg p-1',
-                              result === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
+                              'w-16 h-16 rounded-full flex items-center justify-center text-center text-white font-bold shadow-lg p-1',
+                               result === 'Don\'t Play' ? 'bg-destructive text-xs' : 'bg-green-500 text-sm'
                             )}
                           >
                            {result}
@@ -505,8 +505,8 @@ export default function PredictPage() {
                       </div>
                       <div
                         className={cn(
-                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-xl text-center p-2',
-                          prediction === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
+                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold shadow-xl text-center p-2',
+                          prediction === 'Don\'t Play' ? 'bg-destructive text-lg' : 'bg-green-500 text-xl'
                         )}
                       >
                        {prediction}
