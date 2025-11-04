@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'en.reformsports.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
