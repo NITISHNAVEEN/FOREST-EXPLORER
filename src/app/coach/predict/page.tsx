@@ -287,7 +287,7 @@ export default function PredictPage() {
       field: 'outlook',
       label: 'Outlook',
       icon: Sun,
-      tooltip: 'The general weather outlook.',
+      tooltip: 'The general Sky Condition.',
       options: ['sunny', 'overcast', 'rainy'],
     },
     {
@@ -469,7 +469,7 @@ export default function PredictPage() {
                         <div key={index} className="flex flex-col items-center space-y-2 flex-shrink-0">
                           <div
                             className={cn(
-                              'w-16 h-16 rounded-full flex items-center justify-center text-center text-white font-bold text-base shadow-lg p-1',
+                              'w-16 h-16 rounded-full flex items-center justify-center text-center text-white font-bold text-sm shadow-lg p-1',
                               result === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
                             )}
                           >
@@ -505,7 +505,7 @@ export default function PredictPage() {
                       </div>
                       <div
                         className={cn(
-                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl text-center p-2',
+                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-xl text-center p-2',
                           prediction === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
                         )}
                       >
