@@ -30,21 +30,18 @@ export default function Home() {
     {
       name: 'Doctor',
       description: 'Provide medical advice and support.',
-      icon: <Stethoscope className="h-10 w-10" />,
       href: '/doctor',
       image: placeholderImages.doctor,
     },
     {
       name: 'Sports Coach',
-      description: 'Create workout plans and provide fitness advice.',
-      icon: <Dumbbell className="h-10 w-10" />,
+      description: 'Plans and guides players',
       href: '/coach',
       image: placeholderImages.sports_coach,
     },
     {
       name: 'Computer Seller',
       description: 'Sell computers and accessories.',
-      icon: <Computer className="h-10 w-10" />,
       href: '/seller',
       image: placeholderImages.computer_seller,
     },
