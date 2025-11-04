@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ArrowLeft, BrainCircuit, Zap } from 'lucide-react';
+import { ArrowLeft, BrainCircuit, Zap, Database } from 'lucide-react';
 
 export default function SellerPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -37,7 +37,7 @@ export default function SellerPage() {
             }`}
           >
             <h2 className="text-3xl font-bold tracking-tight text-center md:text-4xl text-foreground">
-              Do you wish to harness the magic wand of random forest algorithm to predict whether your customer will buy a computer?
+              Do you wish to harness the magic wand of random forest to predict whether your customer will buy a computer?
             </h2>
             <p className="mt-4 text-lg text-center text-muted-foreground">
               We can surely help you out.
@@ -45,11 +45,11 @@ export default function SellerPage() {
           </div>
 
           <div
-            className={`flex justify-center transition-all duration-1000 ease-out delay-500 ${
+            className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-1000 ease-out delay-500 ${
               isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <Card className="w-full max-w-lg shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
                   <BrainCircuit className="w-8 h-8 text-primary" />
@@ -65,10 +65,37 @@ export default function SellerPage() {
                   Just fill in some inputs to predict whether the customer is likely to buy a computer or not. Random forest algorithm can solve your problem by using various decision trees which gives you the best result.
                 </CardDescription>
                 <div className="flex justify-end mt-6">
-                  <Link href="#">
+                  <Link href="/seller/predict">
                     <Button>
                       <Zap className="w-4 h-4 mr-2" />
                       Predict Now
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <Database className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">
+                    View Customer Dataset
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">
+                  Explore the sample customer data that our Random Forest
+                  model uses to make predictions.
+                </CardDescription>
+                <div className="flex justify-end mt-6">
+                  <Link href="/seller/dataset">
+                    <Button variant="outline">
+                      <Database className="w-4 h-4 mr-2" />
+                      View Dataset
                     </Button>
                   </Link>
                 </div>
