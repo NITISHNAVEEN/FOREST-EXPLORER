@@ -11,7 +11,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ArrowLeft, BrainCircuit, TestTube2, GitMerge, FileJson } from 'lucide-react';
+import { ArrowLeft, BrainCircuit, TestTube2, GitMerge, FileJson, ArrowRight } from 'lucide-react';
 import tennisData from '@/lib/tennis-data.json';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -171,6 +171,15 @@ export default function DatasetPage() {
               </div>
             </CardContent>
           </Card>
+
+          <div className="mt-12 text-center">
+            <Link href="/coach/predict">
+              <Button size="lg">
+                Explore the Decision Trees and Make a Prediction
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+          </div>
 
         </div>
       </main>
