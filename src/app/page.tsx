@@ -131,7 +131,7 @@ export default function Home() {
                   width={role.image.width}
                   height={role.image.height}
                   data-ai-hint={role.image['data-ai-hint']}
-                  className="object-cover w-full h-full"
+                  className="object-cover object-center w-full h-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-6 text-primary-foreground">
