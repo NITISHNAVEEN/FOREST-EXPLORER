@@ -24,6 +24,7 @@ import {
   Cloudy,
   Wind,
   Thermometer,
+  ArrowDown,
 } from 'lucide-react';
 import {
   Tooltip,
@@ -468,7 +469,7 @@ export default function PredictPage() {
                         <div key={index} className="flex flex-col items-center space-y-2 flex-shrink-0">
                           <div
                             className={cn(
-                              'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg',
+                              'w-16 h-16 rounded-full flex items-center justify-center text-center text-white font-bold text-base shadow-lg p-1',
                               result === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
                             )}
                           >
@@ -489,7 +490,7 @@ export default function PredictPage() {
                       ))}
                     </div>
 
-                     <ArrowLeft className="w-12 h-12 text-muted-foreground rotate-90" />
+                     <ArrowDown className="w-12 h-12 text-muted-foreground" />
 
                     <div className="flex flex-col items-center space-y-2">
                        <div className="flex gap-4 items-center mb-4">
@@ -504,7 +505,7 @@ export default function PredictPage() {
                       </div>
                       <div
                         className={cn(
-                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl',
+                          'w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-xl text-center p-2',
                           prediction === 'Don\'t Play' ? 'bg-destructive' : 'bg-green-500'
                         )}
                       >
