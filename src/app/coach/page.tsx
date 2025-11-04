@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ArrowLeft, BrainCircuit, Zap } from 'lucide-react';
+import { ArrowLeft, BrainCircuit, Zap, Database } from 'lucide-react';
 
 export default function CoachPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -45,11 +45,11 @@ export default function CoachPage() {
           </div>
 
           <div
-            className={`transition-all duration-1000 ease-out delay-500 ${
+            className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-1000 ease-out delay-500 ${
               isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow max-w-2xl mx-auto">
+            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
                   <BrainCircuit className="w-8 h-8 text-primary" />
@@ -69,6 +69,33 @@ export default function CoachPage() {
                     <Button>
                       <Zap className="w-4 h-4 mr-2" />
                       Predict Now
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="w-full shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <Database className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">
+                    View Tennis Dataset
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">
+                  Explore the sample weather data that our Random Forest
+                  model uses to make predictions.
+                </CardDescription>
+                <div className="flex justify-end mt-6">
+                  <Link href="/coach/dataset">
+                    <Button variant="outline">
+                      <Database className="w-4 h-4 mr-2" />
+                      View Dataset
                     </Button>
                   </Link>
                 </div>
