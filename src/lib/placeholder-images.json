@@ -6,10 +6,10 @@
     "data-ai-hint": "doctor consultation"
   },
   "sports_coach": {
-    "src": "https://picsum.photos/seed/coach/600/400",
+    "src": "https://en.reformsports.com/oxegrebi/2019/06/tenis-kortu-cesitleri-nelerdir-zeminlerine-gore-kortlar.jpg",
     "width": 600,
     "height": 400,
-    "data-ai-hint": "fitness training"
+    "data-ai-hint": "tennis court"
   },
   "computer_seller": {
     "src": "https://picsum.photos/seed/seller/600/400",
@@ -37,8 +37,14 @@
   },
   "tennis_court": {
     "src": "https://en.reformsports.com/oxegrebi/2019/06/tenis-kortu-cesitleri-nelerdir-zeminlerine-gore-kortlar.jpg",
-    "width": 600,
+    "width": 400,
     "height": 400,
     "data-ai-hint": "tennis court"
+  },
+  "computer_shop": {
+    "src": "https://picsum.photos/seed/computer-shop/400/400",
+    "width": 400,
+    "height": 400,
+    "data-ai-hint": "computer shop retail"
   }
 }
