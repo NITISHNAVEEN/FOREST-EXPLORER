@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Stethoscope, Dumbbell, Carrot } from 'lucide-react';
+import { Stethoscope, Dumbbell, Computer } from 'lucide-react';
 
 import {
   Card,
@@ -30,11 +30,11 @@ export default function Home() {
       image: placeholderImages.sports_coach,
     },
     {
-      name: 'Vegetable Vendor',
-      description: 'Offer fresh produce and recipes.',
-      icon: <Carrot className="h-10 w-10" />,
-      href: '/vendor',
-      image: placeholderImages.vegetable_vendor,
+      name: 'Computer Seller',
+      description: 'Sell computers and accessories.',
+      icon: <Computer className="h-10 w-10" />,
+      href: '/seller',
+      image: placeholderImages.computer_seller,
     },
   ];
 
