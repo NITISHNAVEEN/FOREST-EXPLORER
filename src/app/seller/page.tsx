@@ -37,7 +37,7 @@ export default function SellerPage() {
             }`}
           >
             <h2 className="text-3xl font-bold tracking-tight text-center md:text-4xl text-foreground">
-              Do you wish to harness the magic wand of a random forest algorithm to predict whether your customer will buy a computer?
+              Do you wish to harness the magic wand of random forest algorithm to predict whether your customer will buy a computer?
             </h2>
             <p className="mt-4 text-lg text-center text-muted-foreground">
               We can surely help you out.
@@ -62,7 +62,7 @@ export default function SellerPage() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
-                  Just fill in some inputs to predict whether the customer is likely to buy a computer or not. The Random Forest algorithm can solve your problem by using various decision trees which gives you the best result.
+                  Just fill in some inputs to predict whether the customer is likely to buy a computer or not. Random forest algorithm can solve your problem by using various decision trees which gives you the best result.
                 </CardDescription>
                 <div className="flex justify-end mt-6">
                   <Link href="#">
