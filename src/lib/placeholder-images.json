@@ -34,5 +34,11 @@
     "width": 128,
     "height": 128,
     "data-ai-hint": "blood pressure monitor"
+  },
+  "tennis_court": {
+    "src": "https://picsum.photos/seed/tennis-court/600/400",
+    "width": 600,
+    "height": 400,
+    "data-ai-hint": "tennis court"
   }
 }
