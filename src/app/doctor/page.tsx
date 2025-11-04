@@ -63,9 +63,9 @@ export default function DoctorPage() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
-                  Use our AI-powered tool to predict heart attack risk based on
-                  patient vitals, leveraging the power of multiple decision
-                  trees.
+                  Use our tool to predict heart attack risk based on patient
+                  vitals, leveraging the power of the Random Forest algorithm
+                  and multiple decision trees.
                 </CardDescription>
                 <div className="flex justify-end mt-6">
                   <Link href="/doctor/predict">
