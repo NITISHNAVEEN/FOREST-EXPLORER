@@ -1,0 +1,115 @@
+
+[
+  {
+    "day": "d1",
+    "outlook": "sunny",
+    "temp": "hot",
+    "humid": "high",
+    "wind": "weak",
+    "playTennis": "no"
+  },
+  {
+    "day": "d2",
+    "outlook": "sunny",
+    "temp": "hot",
+    "humid": "high",
+    "wind": "strong",
+    "playTennis": "no"
+  },
+  {
+    "day": "d3",
+    "outlook": "overcast",
+    "temp": "hot",
+    "humid": "high",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d4",
+    "outlook": "rainy",
+    "temp": "mild",
+    "humid": "high",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d5",
+    "outlook": "rainy",
+    "temp": "cool",
+    "humid": "normal",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d6",
+    "outlook": "rainy",
+    "temp": "cool",
+    "humid": "normal",
+    "wind": "strong",
+    "playTennis": "no"
+  },
+  {
+    "day": "d7",
+    "outlook": "overcast",
+    "temp": "cool",
+    "humid": "normal",
+    "wind": "strong",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d8",
+    "outlook": "sunny",
+    "temp": "mild",
+    "humid": "high",
+    "wind": "weak",
+    "playTennis": "no"
+  },
+  {
+    "day": "d9",
+    "outlook": "sunny",
+    "temp": "cool",
+    "humid": "normal",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d10",
+    "outlook": "rainy",
+    "temp": "mild",
+    "humid": "normal",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d11",
+    "outlook": "sunny",
+    "temp": "mild",
+    "humid": "normal",
+    "wind": "strong",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d12",
+    "outlook": "overcast",
+    "temp": "mild",
+    "humid": "high",
+    "wind": "strong",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d13",
+    "outlook": "overcast",
+    "temp": "hot",
+    "humid": "normal",
+    "wind": "weak",
+    "playTennis": "yes"
+  },
+  {
+    "day": "d14",
+    "outlook": "rainy",
+    "temp": "mild",
+    "humid": "high",
+    "wind": "strong",
+    "playTennis": "no"
+  }
+]
