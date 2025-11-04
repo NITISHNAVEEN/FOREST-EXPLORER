@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -44,17 +43,6 @@ export default function DoctorPage() {
             <p className="mt-4 text-lg text-center text-muted-foreground">
               We have the solution.
             </p>
-          </div>
-
-          <div className="flex justify-center">
-            <Image 
-              src="https://i0.wp.com/www.treatathomes.com/wp-content/uploads/2022/07/heart-attack-cardio.jpg"
-              alt="Heart Attack"
-              width={500}
-              height={300}
-              className="rounded-lg shadow-lg"
-              data-ai-hint="heart cardio"
-            />
           </div>
 
           <div
