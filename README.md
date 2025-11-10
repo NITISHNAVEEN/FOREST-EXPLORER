@@ -14,7 +14,6 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
   <img src="public/website-preview.png" alt="Forest Explorer Screenshot" width="800"/>
 </p>
 
-*(Replace public/website-preview.png with your actual image path — e.g. /public/images/app-screenshot.png.)*
 
 ---
 
