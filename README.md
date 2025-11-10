@@ -4,7 +4,8 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
 
 🎯 *Live Demo:*  
 
-👉 *Version 1*[https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl ](forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app )
+👉 *Version 1*
+[https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl ](forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app )
 
 👉 *Version 2 (FINAL)*  [forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app ](https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl )
 
@@ -16,6 +17,29 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
   <img src="public/website-preview.png" alt="Forest Explorer Screenshot" width="800"/>
 </p>
 
+<p align="center">
+  <img src="public/website-preview-2.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
+
+<p align="center">
+  <img src="public/website-preview-3.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
+
+<p align="center">
+  <img src="public/website-preview-4.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
+
+<p align="center">
+  <img src="public/website-preview-5.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
+
+<p align="center">
+  <img src="public/website-preview-6.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
+
+<p align="center">
+  <img src="public/website-preview-7.png" alt="Forest Explorer Screenshot" width="800"/>
+</p>
 
 ---
 
@@ -23,13 +47,10 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
 
 | Name | Roll_No | Role |
 |------|------|------|
-| *Chandan Kumar (24BDS013)*| Worked on version 1 of the project and gave the direction and ignition. Also, shaped the way further for 2nd version and gave inputs over frontend and performed GitHub domain tasks in both the versions. Also, framed the idea to summarise training in view dataset page of all 3 roles in version 2.|
-
-| *Nitish Naveen (24BDS050)*| Built the functional 2nd version of the application using the ideas given by Anchal. Implemented Rithika's idea of tracing the decision tree. Also, debugged the application while working in coordination with Rithika. |
-
-| *Anchal Jaiswal (24BDS003)*| Construction and framing of the idea of the simpler User Interface of version 2 including 3 roles making, story telling and whole "Prediction and explanation" page for all 3 roles. |
-
-| *Rithika S (24BDS067)*| Gave the idea to track how the decision tree works and gives the results for better visualization. Validated the functionality and scanned the bugs in the 2nd version. |
+| *Chandan Kumar* | *24BDS013*| Worked on version 1 of the project and gave the direction and ignition. Also, shaped the way further for 2nd version and gave inputs over frontend and performed GitHub domain tasks in both the versions. Also, framed the idea to summarise training in view dataset page of all 3 roles in version 2.
+| *Nitish Naveen*| *24BDS050* | Built the functional 2nd version of the application using the ideas given by Anchal. Implemented Rithika's idea of tracing the decision tree. Also, debugged the application while working in coordination with Rithika. 
+| *Anchal Jaiswal*| *24BDS003*| Construction and framing of the idea of the simpler User Interface of version 2 including 3 roles making, story telling and whole "Prediction and explanation" page for all 3 roles. 
+| *Rithika S*| *24BDS067*| Gave the idea to track how the decision tree works and gives the results for better visualization. Validated the functionality and scanned the bugs in the 2nd version. |
 
 ---
 
@@ -40,8 +61,7 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
 | *Next.js* | React-based framework for building fast, interactive web apps |
 | *TypeScript* | Type-safe code for better maintainability and reliability |
 | *Tailwind CSS* | Utility-first CSS framework for sleek, responsive UI |
-| *Recharts / D3.js (optional)* | For creating dynamic visualizations |
-| *Vercel* | (Optional) For deployment and hosting |
+| *Vercel* | For deployment and hosting |
 
 ---
 
