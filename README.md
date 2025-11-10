@@ -4,9 +4,9 @@ An interactive and beginner-friendly web app to *learn Random Forest* — one of
 
 🎯 *Live Demo:*  
 
-👉 *Version 1*[https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl ](https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl )
+👉 *Version 1*[https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl ](forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app )
 
-👉 *Version 2 (FINAL)*  [forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app ](forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app )
+👉 *Version 2 (FINAL)*  [forest-insights-git-main-chandan-kumars-projects-dc82feb1.vercel.app ](https://forest-explorer-git-main-nitishnaveens-projects.vercel.app?_vercel_share=z8WXMPyTl9AOXNXLvgWkHMjILghhKwkl )
 
 ---
 
